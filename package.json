@@ -1,0 +1,43 @@
+{
+	"name": "develop_package_js",
+	"version": "0.0.0",
+	"description": "",
+	"author": "akaDJon",
+	"license": "ISC",
+	"main": "app/index.js",
+	"scripts": {
+		"dev": "webpack --config webpack.config.dev.js",
+		"watch": "webpack --config webpack.config.dev.js --watch",
+		"start": "webpack-dev-server --config webpack.config.dev.js --open",
+		"build": "webpack --config webpack.config.dist-unmin.js && webpack --config webpack.config.dist-min.js",
+		"lint": "eslint ./src/js/app/**/*.{js,ts}",
+		"lint-fix": "eslint ./src/js/app/**/*.{js,ts} --fix"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.17.5",
+		"@babel/preset-env": "^7.16.11",
+		"babel-loader": "^8.2.3",
+		"clean-webpack-plugin": "^4.0.0",
+		"copy-webpack-plugin": "^10.2.4",
+		"css-loader": "^6.6.0",
+		"css-minimizer-webpack-plugin": "^3.4.1",
+		"eslint": "^8.9.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-prettier": "^8.4.0",
+		"eslint-plugin-import": "^2.25.4",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-unicorn": "^41.0.0",
+		"eslint-webpack-plugin": "^3.1.1",
+		"html-webpack-plugin": "^5.5.0",
+		"less-loader": "^10.2.0",
+		"mini-css-extract-plugin": "^2.5.3",
+		"node-sass": "^7.0.1",
+		"prettier": "^2.5.1",
+		"sass-loader": "^12.6.0",
+		"style-loader": "^3.3.1",
+		"terser-webpack-plugin": "^5.3.1",
+		"webpack": "^5.69.1",
+		"webpack-cli": "^4.9.2",
+		"webpack-dev-server": "^4.7.4"
+	}
+}

@@ -1,0 +1,19 @@
+@mycolor: blue;
+
+.bordered {
+  border-top: dotted 1px black;
+  border-bottom: solid 2px black;
+}
+
+.container {
+  background-color: #dfe5ff;
+  padding: 2rem;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  .bordered();
+
+  h1 {
+    color: @mycolor;
+  }
+}

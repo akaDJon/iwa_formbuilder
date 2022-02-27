@@ -14,6 +14,7 @@ Desktop.ini
 !/readme/.gitkeep
 /node_modules/
 /vendor/
+/demo/dev/
 
 
 # .idea #
