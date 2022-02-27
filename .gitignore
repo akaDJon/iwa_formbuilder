@@ -1,0 +1,31 @@
+# OSX #
+._*
+.Spotlight-V100
+.Trashes
+.DS_Store
+
+# Windows #
+Thumbs.db
+Desktop.ini
+
+
+# Project #
+/readme/!*
+!/readme/.gitkeep
+/node_modules/
+/vendor/
+
+
+# .idea #
+/.idea/*
+!/.idea/codeStyles
+!/.idea/inspectionProfiles
+!/.idea/libraries
+!/.idea/runConfigurations
+!/.idea/scopes
+!/.idea/jsLinters
+!/.idea/.gitattributes
+!/.idea/encodings.xml
+!/.idea/fileColors.xml
+!/.idea/vcs.xml
+!/.idea/*.iml
