@@ -1,6 +1,12 @@
 # template_module_php_and_js 
 это шаблон-основа для будущих модульных пакетов в которые будут отрезаться куски js и php функционала от легаси монолита.
 
+## настройки git:
+```
+git config core.autocrlf input
+git config core.eol lf
+```
+
 ## js environment:
 ```
 webpack
