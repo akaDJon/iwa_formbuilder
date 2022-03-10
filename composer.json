@@ -11,8 +11,16 @@
     ],
 	"autoload": {
 		"psr-4": {
-			"Akadjon\\TemplatePackageJs\\": "src/"
+			"akaDJon\\": "src/php/app"
 		}
 	},
-    "require": {}
+	"scripts": {
+		"phpcs": "vendor/bin/phpcs --standard=./phpcs.xml --report=csv --report-csv=./phpcs.log.csv",
+		"phpcs-fix": "vendor/bin/phpcbf --standard=./phpcs.xml",
+		"psalm": "vendor/bin/psalm -m --config=./psalm.xml --output-format=text > ./psalm.log.txt"
+	},
+    "require-dev": {
+		"squizlabs/php_codesniffer": "^3.6",
+        "vimeo/psalm": "^4.22"
+    }
 }

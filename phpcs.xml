@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PHP_CodeSniffer" xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+	<description>The coding standard for IWA</description>
+
+	<!--	https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset-->
+	<!--	https://github.com/squizlabs/PHP_CodeSniffer/blob/master/src/Standards/PSR12/ruleset.xml-->
+
+	<!-- ARGUMENTS -->
+	<!--	<arg name="tab-width" value="4"/>-->
+	<!--	<arg name="encoding" value="utf-8"/>-->
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="./../../"/>
+
+	<arg value="p"/>
+	<!--	<arg value="m"/>-->
+	<arg value="vvv"/>
+
+	<!-- FILES AND EXCLUDES -->
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+
+	<file>src/php/</file>
+
+<!--	<file>../../public/administrator/components/</file>-->
+<!--	<exclude-pattern>/public/administrator/components/(?!com_iwa_)*</exclude-pattern>-->
+
+	<!-- RULES -->
+	<rule ref="PSR12">
+<!--		<exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>&lt;!&ndash; Игнорируем в каждом классе:  defined('_JEXEC') or die; &ndash;&gt;-->
+<!--		<exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>&lt;!&ndash; Игнорируем отсутствие namespace в каждом классе &ndash;&gt;-->
+<!--		<exclude name="Squiz.Classes.ValidClassName.NotCamelCaps"/>&lt;!&ndash; Игнорируем имена классов не в CamelCaps &ndash;&gt;-->
+<!--		<exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>&lt;!&ndash; Игнорируем имена методов не в CamelCaps &ndash;&gt;-->
+<!--		<exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/>&lt;!&ndash; Игнорируем имена свойств начинающиеся с подчеркивания &ndash;&gt;-->
+<!--		<exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>&lt;!&ndash; Игнорируем имена методов начинающиеся с подчеркивания &ndash;&gt;-->
+<!--		<exclude name="PSR2.Methods.FunctionCallSignature.Indent"/>&lt;!&ndash; Конфликтующие с phpStorm сдвиги аргументов функции &ndash;&gt;-->
+	</rule>
+
+<!--	<rule ref="Generic.Files.LineLength">-->
+<!--		<properties>-->
+<!--			<property name="lineLimit" value="400"/>&lt;!&ndash; Максимальная длина строки &ndash;&gt;-->
+<!--		</properties>-->
+<!--	</rule>-->
+
+</ruleset>

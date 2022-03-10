@@ -7,7 +7,7 @@ git config core.autocrlf input
 git config core.eol lf
 ```
 
-## js environment:
+## js dev environment:
 ```
 webpack
 	webpack-dev-server
@@ -40,7 +40,10 @@ babel
 	preset-env
 ```
 
-## php environment:
+## php dev environment:
 ```
-в разработке
+php_codesniffer
+    PSR12
+
+psalm
 ```
