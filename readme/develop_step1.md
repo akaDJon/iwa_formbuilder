@@ -1,4 +1,6 @@
-# iwa_formbuilder
+# Этап 1: прототип XML и PHP формы
+
+http://local/demo/dev/?page=develop_step1
 
 Реализован прототип основная задача которого превращать XML и PHP в идентичное дерево объектов.
 
