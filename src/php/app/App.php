@@ -1,11 +1,11 @@
 <?php
 
-namespace akaDJon;
+namespace IWA_FormBuilder;
 
 class App
 {
     public static function appDemo(): string
     {
-        return 'Hello world';
+        return 'Hello world1';
     }
 }

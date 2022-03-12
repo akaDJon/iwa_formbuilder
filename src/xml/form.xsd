@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- ################# metadata ################# -->
+	<xs:group name="_any_element">
+		<xs:choice>
+			<xs:element name="field" type="field"/>
+			<xs:element name="div" type="div"/>
+			<xs:element name="group" type="group"/>
+			<xs:element name="tabs" type="tabs"/>
+			<xs:element name="splitter" type="splitter"/>
+			<xs:element name="btn_group" type="btn_group"/>
+			<xs:element name="accordion" type="accordion"/>
+			<xs:element name="html" type="html"/>
+			<xs:element name="alert" type="alert"/>
+			<xs:element name="heading" type="heading"/>
+			<xs:element name="code" type="code"/>
+		</xs:choice>
+	</xs:group>
+
+	<xs:simpleType name="_field_type__in_form_xml">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="iwa_badge"/>
+			<xs:enumeration value="iwa_badge_catalogs"/>
+			<xs:enumeration value="iwa_badge_def_id"/>
+			<xs:enumeration value="iwa_badge_def_published"/>
+			<xs:enumeration value="iwa_badge_def_staff2status"/>
+			<xs:enumeration value="iwa_badge_def_staffstatus"/>
+			<xs:enumeration value="iwa_badge_def_studentstatus"/>
+			<xs:enumeration value="iwa_badge_def_version"/>
+			<xs:enumeration value="iwa_badge_list"/>
+			<xs:enumeration value="iwa_button"/>
+			<xs:enumeration value="iwa_checkbox"/>
+			<xs:enumeration value="iwa_checkbox_classic"/>
+			<xs:enumeration value="iwa_checkboxes"/>
+			<xs:enumeration value="iwa_checkboxes_catalogs"/>
+			<xs:enumeration value="iwa_checkboxes_def_group"/>
+			<xs:enumeration value="iwa_datatable"/>
+			<xs:enumeration value="iwa_datetime"/>
+			<xs:enumeration value="iwa_datetime_date"/>
+			<xs:enumeration value="iwa_datetime_time"/>
+			<xs:enumeration value="iwa_drawio"/>
+			<xs:enumeration value="iwa_fileupload"/>
+			<xs:enumeration value="iwa_hidden"/>
+			<xs:enumeration value="iwa_imageupload"/>
+			<xs:enumeration value="iwa_infobox"/>
+			<xs:enumeration value="iwa_infobox_textarea"/>
+			<xs:enumeration value="iwa_list"/>
+			<xs:enumeration value="iwa_list_def"/>
+			<xs:enumeration value="iwa_list_def_mac"/>
+			<xs:enumeration value="iwa_list_def_month"/>
+			<xs:enumeration value="iwa_list_def_treeordering"/>
+			<xs:enumeration value="iwa_listjson"/>
+			<xs:enumeration value="iwa_listjson_core"/>
+			<xs:enumeration value="iwa_listjson_def_authoraccess"/>
+			<xs:enumeration value="iwa_listjson_def_group"/>
+			<xs:enumeration value="iwa_listjson_def_kato"/>
+			<xs:enumeration value="iwa_listjson_def_user"/>
+			<xs:enumeration value="iwa_listjson_def_year"/>
+			<xs:enumeration value="iwa_listjson_dependent"/>
+			<xs:enumeration value="iwa_listjson_integer"/>
+			<xs:enumeration value="iwa_radio"/>
+			<xs:enumeration value="iwa_radio_catalogs"/>
+			<xs:enumeration value="iwa_rules"/>
+			<xs:enumeration value="iwa_text"/>
+			<xs:enumeration value="iwa_text_button"/>
+			<xs:enumeration value="iwa_text_currency"/>
+			<xs:enumeration value="iwa_text_decimal"/>
+			<xs:enumeration value="iwa_text_def_address"/>
+			<xs:enumeration value="iwa_text_def_email"/>
+			<xs:enumeration value="iwa_text_def_kato"/>
+			<xs:enumeration value="iwa_text_def_phone"/>
+			<xs:enumeration value="iwa_text_def_user"/>
+			<xs:enumeration value="iwa_text_integer"/>
+			<xs:enumeration value="iwa_text_password"/>
+			<xs:enumeration value="iwa_textarea"/>
+			<xs:enumeration value="iwa_textarea_json"/>
+			<xs:enumeration value="iwa_wysiwyg"/>
+
+			<xs:enumeration value="deprecated_alert"/>
+			<xs:enumeration value="deprecated_editor"/>
+			<xs:enumeration value="deprecated_includetable"/>
+			<xs:enumeration value="deprecated_infobox"/>
+			<xs:enumeration value="deprecated_list_catalogs"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="_field_type__in_filter_xml">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="iwa_datetime"/>
+			<xs:enumeration value="iwa_datetime_date"/>
+			<xs:enumeration value="iwa_datetime_time"/>
+			<xs:enumeration value="iwa_list"/>
+			<xs:enumeration value="iwa_list_def"/>
+			<xs:enumeration value="iwa_list_def_mac"/>
+			<xs:enumeration value="iwa_list_def_month"/>
+			<xs:enumeration value="iwa_list_def_treeordering"/>
+			<xs:enumeration value="iwa_listjson"/>
+			<xs:enumeration value="iwa_listjson_core"/>
+			<xs:enumeration value="iwa_listjson_def_authoraccess"/>
+			<xs:enumeration value="iwa_listjson_def_group"/>
+			<xs:enumeration value="iwa_listjson_def_kato"/>
+			<xs:enumeration value="iwa_listjson_def_user"/>
+			<xs:enumeration value="iwa_listjson_def_year"/>
+			<xs:enumeration value="iwa_listjson_dependent"/>
+			<xs:enumeration value="iwa_listjson_integer"/>
+			<xs:enumeration value="iwa_text"/>
+			<xs:enumeration value="iwa_text_button"/>
+			<xs:enumeration value="iwa_text_currency"/>
+			<xs:enumeration value="iwa_text_decimal"/>
+			<xs:enumeration value="iwa_text_def_address"/>
+			<xs:enumeration value="iwa_text_def_email"/>
+			<xs:enumeration value="iwa_text_def_kato"/>
+			<xs:enumeration value="iwa_text_def_phone"/>
+			<xs:enumeration value="iwa_text_def_user"/>
+			<xs:enumeration value="iwa_text_integer"/>
+			<xs:enumeration value="iwa_text_password"/>
+
+			<xs:enumeration value="deprecated_list_catalogs"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="_field_required">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+			<xs:enumeration value="maybe"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ################# Форма ################# -->
+
+	<xs:element name="form">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="fieldset" type="fieldset" maxOccurs="unbounded"/>
+			</xs:choice>
+			<xs:attribute name="version" use="required" type="xs:int"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="fieldset">
+		<xs:group ref="_any_element" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:attribute name="name" use="required" type="xs:string"/>
+	</xs:complexType>
+
+	<!-- ################# Филды ################# -->
+
+	<xs:complexType name="field">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="option" type="field_iwa_list__option"/>
+			<xs:element name="param" type="field_iwa_listjson__param"/>
+		</xs:choice>
+
+		<xs:attributeGroup ref="field__attributes__in_form_xml"/>
+		<!--<xs:attributeGroup ref="field__attributes__in_filter_xml"/>-->
+		<!--<xs:attributeGroup ref="field__attributes__in_datatables_xml"/>-->
+
+		<xs:attributeGroup ref="field_iwa_button__attributes"/>
+		<xs:attributeGroup ref="field_iwa_checkbox__attributes"/>
+		<xs:attributeGroup ref="field_iwa_checkboxes__attributes"/>
+		<xs:attributeGroup ref="field_iwa_datetime__attributes"/>
+		<xs:attributeGroup ref="field_iwa_imageupload__attributes"/>
+		<xs:attributeGroup ref="field_iwa_listjson__attributes"/>
+		<xs:attributeGroup ref="field_iwa_listjson_dependent__attributes"/>
+		<xs:attributeGroup ref="field_iwa_infobox__attributes"/>
+		<xs:attributeGroup ref="field_iwa_list__attributes"/>
+		<xs:attributeGroup ref="field_iwa_text__attributes"/>
+		<xs:attributeGroup ref="field_iwa_text_decimal__attributes"/>
+		<xs:attributeGroup ref="field_iwa_textarea__attributes"/>
+		<xs:attributeGroup ref="field_iwa_checkboxes_catalogs__attributes"/>
+		<xs:attributeGroup ref="field_iwa_listjson_integer__attributes"/>
+		<xs:attributeGroup ref="field_iwa_datatable__attributes"/>
+		<xs:attributeGroup ref="field_iwa_rules__attributes"/>
+		<xs:attributeGroup ref="field_iwa_wysiwyg__attributes"/>
+		<xs:attributeGroup ref="field_iwa_fileupload__attributes"/>
+
+		<xs:attributeGroup ref="field_deprecated_editor__attributes"/>
+		<xs:attributeGroup ref="field_deprecated_includetable__attributes"/>
+		<xs:attributeGroup ref="field_deprecated_list_catalogs__attributes"/>
+
+	</xs:complexType>
+
+	<xs:attributeGroup name="field__attributes__in_form_xml">
+		<xs:attribute name="type" use="required" type="_field_type__in_form_xml"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="showon" type="xs:string"/>
+		<xs:attribute name="description" type="xs:string"/>
+		<xs:attribute name="default" type="xs:string"/>
+		<xs:attribute name="prepend" type="xs:string"/>
+		<xs:attribute name="prepend_type" type="xs:string"/>
+		<xs:attribute name="append" type="xs:string"/>
+		<xs:attribute name="append_type" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="on_ready" type="xs:string"/>
+		<xs:attribute name="on_ready1" type="xs:string"/>
+		<xs:attribute name="on_ready2" type="xs:string"/>
+		<xs:attribute name="on_ready3" type="xs:string"/>
+		<xs:attribute name="on_ready4" type="xs:string"/>
+		<xs:attribute name="on_ready5" type="xs:string"/>
+		<xs:attribute name="on_load" type="xs:string"/>
+		<xs:attribute name="on_click" type="xs:string"/>
+		<xs:attribute name="on_change" type="xs:string"/>
+		<xs:attribute name="on_keypress" type="xs:string"/>
+		<xs:attribute name="readonly" type="xs:boolean"/>
+		<xs:attribute name="readonlyon" type="xs:string"/>
+		<xs:attribute name="required" type="_field_required"/>
+		<xs:attribute name="requireon" type="xs:string"/>
+		<xs:attribute name="placeholder" type="xs:string"/>
+		<xs:attribute name="field_hidden" type="xs:boolean"/>
+		<xs:attribute name="inputmask_type" type="xs:string"/>
+		<xs:attribute name="inputmask_json" type="xs:string"/>
+		<xs:attribute name="validate_help" type="xs:string"/>
+		<xs:attribute name="validator_type" type="xs:string"/>
+		<xs:attribute name="validator_json" type="xs:string"/>
+		<xs:attribute name="filter" type="xs:string"/>
+		<xs:attribute name="field_render_type" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field__attributes__in_filter_xml">
+		<xs:attribute name="filter_is_set" type="xs:boolean"/>
+		<xs:attribute name="filter_exclude" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field__attributes__in_datatables_xml">
+		<xs:attribute name="field_clone" type="xs:string"/>
+		<xs:attribute name="label_table" type="xs:string"/>
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="field_iwa_button__attributes">
+		<xs:attribute name="text" type="xs:string"/>
+		<xs:attribute name="href" type="xs:string"/>
+		<xs:attribute name="target" type="xs:string"/>
+		<xs:attribute name="icon" type="xs:string"/>
+		<xs:attribute name="enable_always" type="xs:boolean"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_checkbox__attributes">
+		<xs:attribute name="switch_on_text" type="xs:string"/>
+		<xs:attribute name="switch_off_text" type="xs:string"/>
+		<xs:attribute name="switch_on_color" type="xs:string"/>
+		<xs:attribute name="switch_off_color" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_checkboxes__attributes">
+		<xs:attribute name="max_check" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_datetime__attributes">
+		<xs:attribute name="text_disabled" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_imageupload__attributes">
+		<xs:attribute name="width" type="xs:integer"/>
+		<xs:attribute name="height" type="xs:string"/><!-- xs:integer -->
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_listjson__attributes">
+		<xs:attribute name="listjson_type" type="xs:string"/>
+		<xs:attribute name="listjson_minimumInputLength" type="xs:integer"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_listjson_dependent__attributes">
+		<xs:attribute name="listjson_dependent_fields" type="xs:string"/>
+		<xs:attribute name="listjson_dependent_readonly" type="xs:boolean"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_infobox__attributes">
+		<xs:attribute name="infobox_type" type="xs:string"/>
+		<xs:attribute name="infobox_field" type="xs:string"/>
+		<xs:attribute name="infobox_result" type="xs:string"/>
+		<xs:attribute name="infobox_update_on_init" type="xs:boolean"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_list__attributes">
+		<xs:attribute name="multiple" type="xs:boolean"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_text__attributes">
+		<xs:attribute name="maxlength" type="xs:integer"/>
+		<xs:attribute name="autocomplete" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_text_decimal__attributes">
+		<xs:attribute name="decimal_digits" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_textarea__attributes">
+		<xs:attribute name="rows" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_checkboxes_catalogs__attributes">
+		<xs:attribute name="subtype" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_listjson_integer__attributes">
+		<xs:attribute name="first" type="xs:integer"/>
+		<xs:attribute name="last" type="xs:integer"/>
+		<xs:attribute name="step" type="xs:integer"/>
+		<xs:attribute name="format" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_datatable__attributes">
+		<xs:attribute name="dt_xml_file" type="xs:string"/>
+		<xs:attribute name="dt_xml_fieldset" type="xs:string"/>
+		<xs:attribute name="dt_sql_childtable_name" type="xs:string"/>
+		<xs:attribute name="dt_sql_childtable_key" type="xs:string"/>
+		<xs:attribute name="dt_options" type="xs:string"/>
+		<xs:attribute name="dt_init_auto" type="xs:boolean"/>
+		<xs:attribute name="dt_modal_size" type="xs:string"/>
+		<xs:attribute name="dt_sql_save_disabled" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_rules__attributes">
+		<xs:attribute name="validate" type="xs:string"/>
+		<xs:attribute name="component" type="xs:string"/>
+		<xs:attribute name="section" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_wysiwyg__attributes">
+		<xs:attribute name="wysiwyg_db_type" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_iwa_fileupload__attributes">
+		<xs:attribute name="maxfiles" type="xs:integer"/>
+		<xs:attribute name="maxsize" type="xs:integer"/>
+		<xs:attribute name="mask_mime" type="xs:string"/>
+		<xs:attribute name="mask_ext" type="xs:string"/>
+		<xs:attribute name="fu_show_author" type="xs:boolean"/>
+		<xs:attribute name="files_dir" type="xs:string"/>
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="field_deprecated_list_catalogs__attributes">
+		<xs:attribute name="list_params" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_deprecated_editor__attributes">
+		<xs:attribute name="height" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="field_deprecated_includetable__attributes">
+		<xs:attribute name="it_xml_fieldset" type="xs:string"/>
+		<xs:attribute name="it_sql_childtable_name" type="xs:string"/>
+		<xs:attribute name="it_sql_childtable_key" type="xs:string"/>
+	</xs:attributeGroup>
+
+	<xs:complexType name="field_iwa_list__option">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="value" use="required" type="xs:string"/>
+				<xs:attribute name="class" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="field_iwa_listjson__param">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="name" use="required" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<!-- ################# Блоки ################# -->
+
+	<xs:complexType name="div">
+		<xs:group ref="_any_element" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="showon" type="xs:string"/>
+		<xs:attribute name="style" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="group">
+		<xs:group ref="_any_element" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="showon" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="tabs">
+		<xs:choice>
+			<xs:element name="item" type="tabs_item" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="showon" type="xs:string"/>
+		<xs:attribute name="tabs_nav" type="xs:string"/>
+		<xs:attribute name="tabs_side" type="xs:string"/>
+		<xs:attribute name="tabs_align" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="tabs_item">
+		<xs:group ref="_any_element" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="showon" type="xs:string"/>
+		<xs:attribute name="tab_active" type="xs:boolean"/>
+		<xs:attribute name="tab_class_item" type="xs:string"/>
+		<xs:attribute name="tab_class_pane" type="xs:string"/>
+		<xs:attribute name="tabstate_ignore" type="xs:boolean"/>
+	</xs:complexType>
+
+	<xs:complexType name="splitter">
+		<xs:choice>
+			<xs:element name="item" type="splitter_item" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="showon" type="xs:string"/>
+		<xs:attribute name="splitter_height" type="xs:string"/>
+		<xs:attribute name="splitter_invert" type="xs:boolean"/>
+		<xs:attribute name="splitter_horizontal" type="xs:boolean"/>
+	</xs:complexType>
+	<xs:complexType name="splitter_item">
+		<xs:group ref="_any_element" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="splitterpanel_size" type="xs:string"/>
+		<xs:attribute name="splitterpanel_min" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="btn_group">
+		<xs:group ref="_any_element" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="showon" type="xs:string"/>
+		<xs:attribute name="description" type="xs:string"/>
+		<xs:attribute name="btn_group_vertical" type="xs:boolean"/>
+		<xs:attribute name="btn_group_size" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="accordion">
+		<xs:choice>
+			<xs:element name="item" type="accordion_item" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="showon" type="xs:string"/>
+		<xs:attribute name="accordion_only_one" type="xs:boolean"/>
+	</xs:complexType>
+	<xs:complexType name="accordion_item">
+		<xs:group ref="_any_element" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="accordionpanel_open" type="xs:boolean"/>
+		<xs:attribute name="prepend" type="xs:string"/>
+		<xs:attribute name="append" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="html" mixed="true">
+		<xs:choice>
+			<xs:element name="item" type="html_item" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="showon" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="html_item">
+		<xs:group ref="_any_element" minOccurs="0" maxOccurs="unbounded"/>
+	</xs:complexType>
+
+	<!-- ################# Информы ################# -->
+
+	<xs:complexType name="alert" mixed="true">
+		<xs:group ref="_any_element" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="class" type="xs:string"/>
+		<xs:attribute name="showon" type="xs:string"/>
+		<xs:attribute name="type" type="xs:string"/>
+		<xs:attribute name="header" type="xs:string"/>
+		<xs:attribute name="message" type="xs:string"/>
+		<xs:attribute name="dismiss" type="xs:boolean"/>
+	</xs:complexType>
+
+	<xs:complexType name="heading">
+		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="showon" type="xs:string"/>
+		<xs:attribute name="tag" type="xs:string"/>
+		<xs:attribute name="print_hr" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="code" mixed="true">
+		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="language" type="xs:string"/>
+		<xs:attribute name="line_numbers" type="xs:boolean"/>
+	</xs:complexType>
+
+</xs:schema>

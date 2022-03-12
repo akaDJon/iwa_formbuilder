@@ -1,5 +1,5 @@
 {
-    "name": "akadjon/template_package_js",
+	"name": "akadjon/iwa_formbuilder",
 	"version": "0.0.0",
 	"description": "",
 	"license": "ISC",
@@ -11,7 +11,7 @@
     ],
 	"autoload": {
 		"psr-4": {
-			"akaDJon\\": "src/php/app"
+			"IWA_FormBuilder\\": "src/php/app"
 		}
 	},
 	"scripts": {
@@ -21,6 +21,10 @@
 	},
     "require-dev": {
 		"squizlabs/php_codesniffer": "^3.6",
-        "vimeo/psalm": "^4.22"
+        "vimeo/psalm": "^4.22",
+		"symfony/var-dumper": "^6.0"
+	},
+	"require": {
+		"sabre/xml": "^2.2"
     }
 }

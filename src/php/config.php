@@ -1,7 +1,7 @@
-<?php
+<?php // phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 
 if (!defined('ROOTPROJECT')) {
-    define('ROOTPROJECT', 'D:/SOFT/PROGRAM/OpenServer/domains/template_module_php_and_js');
+    define('ROOTPROJECT', 'D:\SOFT\PROGRAM\OpenServer\domains\iwa_formbuilder');
 }
 
 require_once(ROOTPROJECT . '/vendor/autoload.php');

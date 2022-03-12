@@ -1,1 +1,0 @@
-D:\SOFT\PROGRAM\OpenServer\domains\template_module_php_and_js\src\php\app\test.php:15:5:error - UnusedMethodCall: The call to Foo::getBar is not used

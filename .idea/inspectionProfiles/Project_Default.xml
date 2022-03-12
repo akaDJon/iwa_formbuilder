@@ -10,14 +10,17 @@
     <inspection_tool class="ES6ModulesDependencies" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PhpCSValidationInspection" enabled="true" level="CodeStyle" enabled_by_default="true">
+      <option name="CODING_STANDARD" value="Custom" />
+      <option name="CUSTOM_RULESET_PATH" value="$PROJECT_DIR$/phpcs.xml" />
       <option name="WARNING_HIGHLIGHT_LEVEL_NAME" value="CodeStyle" />
       <option name="SHOW_SNIFF_NAMES" value="true" />
       <option name="EXTENSIONS" value="php" />
     </inspection_tool>
+    <inspection_tool class="PhpFullyQualifiedNameUsageInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="PhpIncludeInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="PhpUnhandledExceptionInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="PsalmGlobal" enabled="true" level="Analysis" enabled_by_default="true">
-      <option name="config" value="D:\SOFT\PROGRAM\OpenServer\domains\template_module_php_and_js\psalm.xml" />
+      <option name="config" value="$PROJECT_DIR$/psalm.xml" />
     </inspection_tool>
     <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
       <option name="processCode" value="true" />
