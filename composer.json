@@ -25,6 +25,10 @@
 		"symfony/var-dumper": "^6.0"
 	},
 	"require": {
-		"sabre/xml": "^2.2"
-    }
+		"sabre/xml": "^2.2",
+		"symfony/yaml": "^6.0"
+    },
+	"suggest": {
+		"symfony/yaml": "For parsing YAML files"
+	}
 }

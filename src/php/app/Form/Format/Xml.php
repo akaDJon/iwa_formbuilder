@@ -1,16 +1,17 @@
 <?php
 
-namespace IWA_FormBuilder;
+namespace IWA_FormBuilder\Form\Format;
 
+use IWA_FormBuilder\Form;
 use Sabre\Xml\Service;
 
-class FormXml extends Form
+class Xml extends Form
 {
-    public string $xmlfile;
+    public string $xml;
 
-    public function __construct(string $filepath)
+    public function __construct(string $xml)
     {
-        $this->xmlfile = $filepath;
+        $this->xml = $xml;
     }
 
     public function generate(): string
@@ -18,7 +19,7 @@ class FormXml extends Form
         $service             = new Service();
         $service->elementMap = \IWA_FormBuilder\Map::get();
 
-        $this->objecttree = $service->parse(file_get_contents($this->xmlfile));
+        $this->objecttree = $service->parse($this->xml);
 
         dump($this->objecttree);
 

@@ -7,9 +7,11 @@ class Entity
     public string $type;
     public array $params;
 
-    public function __construct(string $type, array $params = [])
+    public function __construct(array $params = [])
     {
-        $this->type   = $type;
+        $this->type = (string)$params['entity'];
+
+        unset($params['entity']);
         $this->params = $params;
     }
 

@@ -1,8 +1,10 @@
 <?php
 
-namespace IWA_FormBuilder;
+namespace IWA_FormBuilder\Form\Format;
 
-class FormPhp extends Form
+use IWA_FormBuilder\Form;
+
+class PhpObject extends Form
 {
     public \IWA_FormBuilder\Entity $entity;
 
@@ -13,8 +15,9 @@ class FormPhp extends Form
 
     public function generate(): string
     {
-        $this->objecttree = $this->entity->parse();
+        dump($this->entity);
 
+        $this->objecttree = $this->entity->parse();
         dump($this->objecttree);
 
         return '';
