@@ -26,4 +26,7 @@
 
 ## Ход разработки
 
-[Этап 1: прототип XML и PHP формы](readme/develop_step1.md)
+- [Этап 1: прототип XML и PHP файла интерфейса](readme/develop_step1.md)
+- [Этап 2: наследования филдов и филд состоящий из других филдов](readme/develop_step2.md)
+
+## TODO:

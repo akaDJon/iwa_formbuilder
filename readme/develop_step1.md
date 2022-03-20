@@ -1,8 +1,8 @@
-# Этап 1: прототип XML и PHP формы
+# Этап 1: прототип XML и PHP файла интерфейса
 
 http://local/demo/dev/?page=develop_step1
 
-Реализован прототип основная задача которого превращать XML и PHP в идентичное дерево объектов.
+Реализован прототип основная задача которого превращать интерфейс в форматах XML и PHP в идентичное дерево объектов.
 
 Вот так выглядит пример интерфейса в [XML](https://github.com/akaDJon/iwa_formbuilder/blob/master/src/php/pages/develop_step1/form.xml) формате:
 ```xml
@@ -48,25 +48,13 @@ return new IWA_FormBuilder\Entity([
                     'label'  => 'текстовое поле',
                 ]),
                 new IWA_FormBuilder\Entity([
-                    'entity'   => 'field_list',
-                    'name'     => 'list',
-                    'label'    => 'С описанием',
-                    'children' => [
-                        new IWA_FormBuilder\Entity([
-                            'entity' => 'option',
-                            'value'  => '1',
-                            'text'   => 'Значение 1',
-                        ]),
-                        new IWA_FormBuilder\Entity([
-                            'entity' => 'option',
-                            'value'  => '2',
-                            'text'   => 'Значение 2',
-                        ]),
-                        new IWA_FormBuilder\Entity([
-                            'entity' => 'option',
-                            'value'  => '3',
-                            'text'   => 'Значение 3',
-                        ]),
+                    'entity'  => 'field_list',
+                    'name'    => 'list',
+                    'label'   => 'С описанием',
+                    'options' => [
+                        ['value' => '1', 'text' => 'Значение 1'],
+                        ['value' => '2', 'text' => 'Значение 2'],
+                        ['value' => '3', 'text' => 'Значение 3'],
                     ],
                 ]),
             ],
@@ -78,34 +66,52 @@ return new IWA_FormBuilder\Entity([
 Имеются также примеры в форматах [JSON](https://github.com/akaDJon/iwa_formbuilder/blob/master/src/php/pages/develop_step1/form.json), [PHP-array](https://github.com/akaDJon/iwa_formbuilder/blob/master/src/php/pages/develop_step1/form.phparray.php) и [YAML](https://github.com/akaDJon/iwa_formbuilder/blob/master/src/php/pages/develop_step1/form.yaml)
 
 И все этих примеры конвертируются в одно и тоже дерево объектов:
+
 ```php
-^ IWA_FormBuilder\Entity\Form {#5 ▼
-  +version: "2"
-  +children: array:1 [▼
-    0 => IWA_FormBuilder\Entity\Fieldset {#6 ▼
-      +name: "main"
-      +children: array:2 [▼
-        0 => IWA_FormBuilder\Entity\FieldText {#7 ▼
-          +name: "text"
-          +label: "текстовое поле"
-        }
-        1 => IWA_FormBuilder\Entity\FieldList {#8 ▼
-          +name: "list"
-          +label: "С описанием"
-          +children: array:3 [▼
-            0 => IWA_FormBuilder\Entity\FieldList_Option {#9 ▼
-              +value: "1"
-              +text: "Значение 1"
-            }
-            1 => IWA_FormBuilder\Entity\FieldList_Option {#10 ▼
-              +value: "2"
-              +text: "Значение 2"
-            }
-            2 => IWA_FormBuilder\Entity\FieldList_Option {#11 ▼
-              +value: "3"
-              +text: "Значение 3"
-            }
+^ IWA_FormBuilder\Entity\Model\Widget\Form {#5 ▼
+  #entity: "form"
+  #attributes: array:2 [▼
+    "version" => "2"
+    "name" => "__genid1"
+  ]
+  #children: array:1 [▼
+    0 => IWA_FormBuilder\Entity\Model\Widget\Fieldset {#6 ▼
+      #entity: "fieldset"
+      #attributes: array:1 [▼
+        "name" => "main"
+      ]
+      #children: array:2 [▼
+        0 => IWA_FormBuilder\Entity\Model\Field\FieldText {#7 ▼
+          #entity: "field_text"
+          #attributes: array:3 [▼
+            "name" => "text"
+            "label" => "текстовое поле"
+            "description" => ""
           ]
+          #children: []
+        }
+        1 => IWA_FormBuilder\Entity\Model\Field\FieldList {#8 ▼
+          #entity: "field_list"
+          #attributes: array:4 [▼
+            "name" => "list"
+            "label" => "С описанием"
+            "description" => ""
+            "options" => array:3 [▼
+              0 => array:2 [▼
+                "value" => "1"
+                "text" => "Значение 1"
+              ]
+              1 => array:2 [▼
+                "value" => "2"
+                "text" => "Значение 2"
+              ]
+              2 => array:2 [▼
+                "value" => "3"
+                "text" => "Значение 3"
+              ]
+            ]
+          ]
+          #children: []
         }
       ]
     }
@@ -118,17 +124,17 @@ return new IWA_FormBuilder\Entity([
 ```php
 <?php
 
-namespace IWA_FormBuilder;
+namespace IWA_FormBuilder\Entity\Service;
 
 class Map
 {
     public static function get(): array
     {
         return [
-            'form'       => \IWA_FormBuilder\Entity\Form::class,
-            'fieldset'   => \IWA_FormBuilder\Entity\Fieldset::class,
-            'field_text' => \IWA_FormBuilder\Entity\FieldText::class,
-            'field_list' => \IWA_FormBuilder\Entity\FieldList::class,
+            'form'       => \IWA_FormBuilder\Entity\Model\Widget\Form::class,
+            'fieldset'   => \IWA_FormBuilder\Entity\Model\Widget\Fieldset::class,
+            'field_text' => \IWA_FormBuilder\Entity\Model\Field\Text::class,
+            'field_list' => \IWA_FormBuilder\Entity\Model\Field\Select::class,
         ];
     }
 }
@@ -144,4 +150,3 @@ class Map
   - Yaml: 12.10 мс,
 - Удобство, лаконичность и читаемость однозначно за XML форматом. Плюс там еще будет контроль ошибок и автоподсказки через XSD
 - Сразу создавать в PHP дерево объектов - это то от чего я умышленно ухожу. Предпочитаю абстракцию. Чтобы можно было замапить каждой сущности свой класс на лету
-- Не очень нравится массивная структура в PHP форме ```IWA_FormBuilder\Entity('field_list'``` с его массивными ```IWA_FormBuilder\Entity('option'```. Возможно в будущем лучше переделать на простой массив

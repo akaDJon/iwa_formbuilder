@@ -6,11 +6,14 @@
 
 	errorLevel="1"
 	resolveFromConfigFile="true"
+	allowStringToStandInForClass="true"
 >
 	<projectFiles>
 		<directory name="src/php"/>
 		<ignoreFiles>
 			<directory name="vendor"/>
+			<directory name="src/php/app/Override"/>
+			<directory name="src/php/snippets"/>
 		</ignoreFiles>
 	</projectFiles>
 
@@ -19,6 +22,8 @@
 	</stubs>
 	
 	<issueHandlers>
+		<DuplicateClass errorLevel="suppress"/>
+		<MissingFile errorLevel="suppress"/>
 <!--		<UnresolvableInclude errorLevel="suppress"/>-->
 
 		<!--		&lt;!&ndash; PHP 7.4+ Expr\ArrowFunction &ndash;&gt;-->

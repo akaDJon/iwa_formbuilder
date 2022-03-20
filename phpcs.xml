@@ -18,6 +18,9 @@
 	<!-- FILES AND EXCLUDES -->
 	<exclude-pattern>/vendor/*</exclude-pattern>
 	<exclude-pattern>/node_modules/*</exclude-pattern>
+	
+	<exclude-pattern>/src/php/app/Override/*</exclude-pattern>
+	<exclude-pattern>/src/php/snippets/*</exclude-pattern>
 
 	<file>src/php/</file>
 
@@ -30,15 +33,15 @@
 <!--		<exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>&lt;!&ndash; Игнорируем отсутствие namespace в каждом классе &ndash;&gt;-->
 <!--		<exclude name="Squiz.Classes.ValidClassName.NotCamelCaps"/>&lt;!&ndash; Игнорируем имена классов не в CamelCaps &ndash;&gt;-->
 <!--		<exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>&lt;!&ndash; Игнорируем имена методов не в CamelCaps &ndash;&gt;-->
-<!--		<exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/>&lt;!&ndash; Игнорируем имена свойств начинающиеся с подчеркивания &ndash;&gt;-->
-<!--		<exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>&lt;!&ndash; Игнорируем имена методов начинающиеся с подчеркивания &ndash;&gt;-->
+		<exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/><!-- Игнорируем имена свойств начинающиеся с подчеркивания -->
+		<exclude name="PSR2.Methods.MethodDeclaration.Underscore"/><!-- Игнорируем имена методов начинающиеся с подчеркивания -->
 <!--		<exclude name="PSR2.Methods.FunctionCallSignature.Indent"/>&lt;!&ndash; Конфликтующие с phpStorm сдвиги аргументов функции &ndash;&gt;-->
 	</rule>
 
-<!--	<rule ref="Generic.Files.LineLength">-->
-<!--		<properties>-->
-<!--			<property name="lineLimit" value="400"/>&lt;!&ndash; Максимальная длина строки &ndash;&gt;-->
-<!--		</properties>-->
-<!--	</rule>-->
+	<rule ref="Generic.Files.LineLength">
+		<properties>
+			<property name="lineLimit" value="400"/><!-- Максимальная длина строки -->
+		</properties>
+	</rule>
 
 </ruleset>

@@ -10,6 +10,7 @@
         }
     ],
 	"autoload": {
+		"files": [],
 		"psr-4": {
 			"IWA_FormBuilder\\": "src/php/app"
 		}
@@ -17,18 +18,30 @@
 	"scripts": {
 		"phpcs": "vendor/bin/phpcs --standard=./phpcs.xml --report=csv --report-csv=./phpcs.log.csv",
 		"phpcs-fix": "vendor/bin/phpcbf --standard=./phpcs.xml",
-		"psalm": "vendor/bin/psalm -m --config=./psalm.xml --output-format=text > ./psalm.log.txt"
-	},
-    "require-dev": {
-		"squizlabs/php_codesniffer": "^3.6",
-        "vimeo/psalm": "^4.22",
-		"symfony/var-dumper": "^6.0"
+		"psalm": "vendor/bin/psalm -m --config=./psalm.xml --no-cache --output-format=text > ./psalm.log.txt",
+		"psalm-clearcache": "vendor/bin/psalm --clear-cache",
+		"install-hooks": "bash src/git/hooks/install.sh"
 	},
 	"require": {
+		"ext-libxml": "*",
+		"ext-xmlreader": "*",
 		"sabre/xml": "^2.2",
-		"symfony/yaml": "^6.0"
-    },
+		"symfony/yaml": "^6.0",
+		"twig/twig": "^3.3"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.6",
+		"vimeo/psalm": "^4.22",
+		"symfony/var-dumper": "^6.0",
+		"akadjon/var-dumper-with-context": "dev-master"
+	},
 	"suggest": {
 		"symfony/yaml": "For parsing YAML files"
-	}
+	},
+	"repositories": [
+		{
+			"url": "https://github.com/akaDJon/var-dumper-with-context",
+			"type": "git"
+		}
+	]
 }
