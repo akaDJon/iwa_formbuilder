@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<forms version="2">
+
+	<form name='main'
+	      form_html='true'
+	>
+
+		<repeatableform
+			name="repeatableform"
+			label="Subform Field"
+			min="1"
+			max="10"
+		>
+
+			<field_text
+				name='text'
+				label='Текстовый input'
+			/>
+
+			<field_select
+				name='list'
+				label='Список'
+			>
+				<option value='1'>Значение 1</option>
+				<option value='2'>Значение 2</option>
+				<option value='3'>Значение 3</option>
+			</field_select>
+
+		</repeatableform>
+
+		<field_submit
+			name='submit'
+			button_text='Отправить форму'
+		/>
+
+	</form>
+
+</forms>

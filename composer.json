@@ -20,12 +20,13 @@
 		"phpcs-fix": "vendor/bin/phpcbf --standard=./phpcs.xml",
 		"psalm": "vendor/bin/psalm -m --config=./psalm.xml --no-cache --output-format=text > ./psalm.log.txt",
 		"psalm-clearcache": "vendor/bin/psalm --clear-cache",
-		"install-hooks": "bash src/git/hooks/install.sh"
+		"install-hooks": "bash src/git/hooks/install.sh",
+		"phpunit": "vendor/bin/phpunit --testsuite all"
 	},
 	"require": {
 		"ext-libxml": "*",
 		"ext-xmlreader": "*",
-		"sabre/xml": "^2.2",
+		"sabre/xml": "2.2.5",
 		"symfony/yaml": "^6.0",
 		"twig/twig": "^3.3"
 	},
@@ -33,7 +34,8 @@
 		"squizlabs/php_codesniffer": "^3.6",
 		"vimeo/psalm": "^4.22",
 		"symfony/var-dumper": "^6.0",
-		"akadjon/var-dumper-with-context": "dev-master"
+		"akadjon/var-dumper-with-context": "dev-master",
+		"phpunit/phpunit": "^9.5"
 	},
 	"suggest": {
 		"symfony/yaml": "For parsing YAML files"

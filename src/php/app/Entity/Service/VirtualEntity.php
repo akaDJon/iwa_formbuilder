@@ -4,13 +4,13 @@ namespace IWA_FormBuilder\Entity\Service;
 
 class VirtualEntity
 {
-    public string $entityname;
+    public string $entityName;
     public array $attributes;
     public array $children;
 
     public function __construct(array $attributes = [])
     {
-        $this->entityname = (string)$attributes['entity'];
+        $this->entityName = (string)$attributes['entity'];
         $this->children   = (array)($attributes['children'] ?? []);
 
         unset($attributes['entity']);

@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
-<form version="2">
+<forms version="2">
 
-	<fieldset name='main'>
+	<form name='main'>
 
 		<field_text
 			name='text'
 			label='текстовое поле'
 		/>
 
-		<field_list
+		<field_select
 			name='list'
 			label='С описанием'
 		>
 			<option value='1'>Значение 1</option>
 			<option value='2'>Значение 2</option>
 			<option value='3'>Значение 3</option>
-		</field_list>
+		</field_select>
 
-	</fieldset>
+	</form>
 
-</form>
+</forms>

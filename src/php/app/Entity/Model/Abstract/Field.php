@@ -6,48 +6,97 @@ use IWA_FormBuilder\Tools\HtmlCollector;
 
 abstract class Field extends Core
 {
-    protected string $entity = '';
-    protected string $id = '';
+    protected string $entityName = '';
+    protected \IWA_FormBuilder\Form\Form $form;
 
-    protected string $field_name = '';
+    protected \IWA_FormBuilder\Entity\Service\Parse\Interface\ReaderInterface $reader;
+
+    protected mixed $value = null;
 
     protected function setup(): void
     {
+        $this->parseAttributeString('filter', 'safe');
         $this->parseAttributeString('label', '', true);
         $this->parseAttributeString('description', '', true);
         $this->parseAttributeBoolean('field_hidden', false);
 
-        $this->field_name = $this->getForm()->getPrefix() . '[' . $this->getAttributeString('name') . ']';
-
         parent::setup();
+    }
+
+    public function setValue(mixed $value): void
+    {
+        $this->value = $value;
+    }
+
+    public function getValue(): mixed
+    {
+        return $this->value;
+    }
+
+    protected function getHtmlInputName(): string
+    {
+        return $this->getForm()->getFullHtmlName() . '[' . $this->getAttributeString('name') . ']';
     }
 
     ////////////////////////////////////////////////////////////////////
 
+    public function runFilter(mixed $value): mixed
+    {
+        $str_filter = $this->getAttributeString('filter');
+
+        $arr_filter = explode('|', $str_filter);
+
+        foreach ($arr_filter as $filtername) {
+            $class = \IWA_FormBuilder\Entity\Service\MapFilter::getClass($filtername);
+
+            /** @var \IWA_FormBuilder\Entity\Service\Filter\Interface\FilterInterface $filter */
+            $filter = new $class();
+            if (is_array($value) and !empty($value)) {
+                /** @var mixed $val */
+                foreach ($value as $key => $val) {
+                    /** @psalm-suppress MixedAssignment */
+                    $value[$key] = $filter->run($val);
+                }
+            } else {
+                /** @var mixed $value */
+                $value = $filter->run($value);
+            }
+        }
+
+        return $value;
+    }
+
     public function render(): string
     {
-        if ($this->getForm()->isInputMode('input')) {
-            return $this->renderWrapedInput();
+        if ($this->getForm()->getRenderMode() == \IWA_FormBuilder\Form\Enum\RenderMode::AS_SUBINPUT) {
+            return $this->renderFieldOnlyInput();
         } else {
-            return $this->renderField();
+            return $this->renderFieldContainer();
         }
     }
 
-    abstract public function renderInput(): string;
+    abstract protected function renderInput(): string;
 
-    public function renderWrapedInput(): string
+    protected function renderInputProxy(): string
+    {
+        $this->getForm()->setDataToField($this);
+
+        return $this->renderInput();
+    }
+
+    protected function renderFieldOnlyInput(): string
     {
         return \IWA_FormBuilder\App::getTwig()
-            ->render('Core/FieldInput.twig', [
-                'id'          => $this->id,
+            ->render('Core/FieldOnlyInput.twig', [
+                'id'          => $this->getHtmlId(),
                 'name'        => $this->getAttribute('name'),
-                'input'       => $this->renderInput(),
-                'entityname'  => $this->entity,
-                'entityclass' => get_class($this),
+                'input'       => $this->renderInputProxy(),
+                'entityName'  => $this->entityName,
+                'entityClass' => get_class($this),
             ]);
     }
 
-    public function renderField(): string
+    protected function renderFieldContainer(): string
     {
         $field_style = HtmlCollector::init(HtmlCollector::TYPE_STYLE);
         if ($this->getAttribute('field_hidden')) {
@@ -61,12 +110,12 @@ abstract class Field extends Core
 
         return \IWA_FormBuilder\App::getTwig()
             ->render('Core/FieldContainer.twig', [
-                'id'              => $this->id,
+                'id'              => $this->getHtmlId(),
                 'name'            => $this->getAttribute('name'),
-                'entityname'      => $this->entity,
-                'entityclass'     => get_class($this),
+                'entityName'      => $this->entityName,
+                'entityClass'     => get_class($this),
                 'labeltext'       => $this->getAttribute('label'),
-                'inputs'          => $this->renderWrapedInput(),
+                'inputs'          => $this->renderFieldOnlyInput(),
                 'descriptiontext' => $this->getAttribute('description'),
                 'field_style'     => $field_style->render(),
                 'label_style'     => $label_style->render(),

@@ -16,14 +16,14 @@ http://local/demo/dev/?page=develop_step1
 			label='текстовое поле'
 		/>
 
-		<field_list
+		<field_select
 			name='list'
 			label='С описанием'
 		>
 			<option value='1'>Значение 1</option>
 			<option value='2'>Значение 2</option>
 			<option value='3'>Значение 3</option>
-		</field_list>
+		</field_select>
 
 	</fieldset>
 
@@ -48,7 +48,7 @@ return new IWA_FormBuilder\Entity([
                     'label'  => 'текстовое поле',
                 ]),
                 new IWA_FormBuilder\Entity([
-                    'entity'  => 'field_list',
+                    'entity'  => 'field_select',
                     'name'    => 'list',
                     'label'   => 'С описанием',
                     'options' => [
@@ -91,7 +91,7 @@ return new IWA_FormBuilder\Entity([
           #children: []
         }
         1 => IWA_FormBuilder\Entity\Model\Field\FieldList {#8 ▼
-          #entity: "field_list"
+          #entity: "field_select"
           #attributes: array:4 [▼
             "name" => "list"
             "label" => "С описанием"
@@ -134,7 +134,7 @@ class Map
             'form'       => \IWA_FormBuilder\Entity\Model\Widget\Form::class,
             'fieldset'   => \IWA_FormBuilder\Entity\Model\Widget\Fieldset::class,
             'field_text' => \IWA_FormBuilder\Entity\Model\Field\Text::class,
-            'field_list' => \IWA_FormBuilder\Entity\Model\Field\Select::class,
+            'field_select' => \IWA_FormBuilder\Entity\Model\Field\Select::class,
         ];
     }
 }

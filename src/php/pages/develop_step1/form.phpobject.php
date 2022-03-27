@@ -1,11 +1,11 @@
 <?php
 
 return new \IWA_FormBuilder\Entity([
-    'entity'   => 'form',
+    'entity'   => 'forms',
     'version'  => '2',
     'children' => [
         new \IWA_FormBuilder\Entity([
-            'entity'   => 'fieldset',
+            'entity'   => 'form',
             'name'     => 'main',
             'children' => [
                 new \IWA_FormBuilder\Entity([
@@ -14,7 +14,7 @@ return new \IWA_FormBuilder\Entity([
                     'label'  => 'текстовое поле',
                 ]),
                 new \IWA_FormBuilder\Entity([
-                    'entity'  => 'field_list',
+                    'entity'  => 'field_select',
                     'name'    => 'list',
                     'label'   => 'С описанием',
                     'options' => [

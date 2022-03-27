@@ -25,7 +25,7 @@ class App
 
     public static function getTwig(): \Twig\Environment
     {
-        $loader = new \Twig\Loader\FilesystemLoader(static::getRootPath() . '/src/php/app/Entity/Templates');
+        $loader = new \Twig\Loader\FilesystemLoader(static::getRootPath() . '/src/php/app/Entity/Template');
 
         return new \Twig\Environment($loader);
     }

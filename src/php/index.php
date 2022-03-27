@@ -13,7 +13,7 @@ require_once(ROOTPROJECT . '/src/php/config.php');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
@@ -31,15 +31,15 @@ require_once(ROOTPROJECT . '/src/php/config.php');
 <body>
 
 <div class="container-fluid py-md-3">
-<?php if (empty($_GET['page'])) : ?>
-    <div class="demo_container">
-        <h1>Demo <?= 'PHP:'; ?> <?= IWA_FormBuilder\App::appDemo(); ?></h1>
-    </div>
-<?php else :
-    $pathinfo = pathinfo((string)$_GET['page']);
-    /** @psalm-suppress UnresolvableInclude */
-    require_once(ROOTPROJECT . '/src/php/pages/' . $pathinfo['basename'] . '/page.php');
-endif; ?>
+    <?php if (empty($_GET['page'])) : ?>
+        <div class="demo_container">
+            <h1>Demo <?= 'PHP:'; ?> <?= IWA_FormBuilder\App::appDemo(); ?></h1>
+        </div>
+    <?php else :
+        $pathinfo = pathinfo((string)$_GET['page']);
+        /** @psalm-suppress UnresolvableInclude */
+        require_once(ROOTPROJECT . '/src/php/pages/' . $pathinfo['basename'] . '/page.php');
+    endif; ?>
 </div>
 </body>
 </html>

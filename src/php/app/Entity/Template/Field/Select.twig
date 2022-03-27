@@ -1,0 +1,21 @@
+<select
+        id="{{ id }}"
+        name="{{ htmlInputName }}"
+        class="form-control"
+        {{ required ? 'required' : '' }}
+        {{ readonly ? 'readonly' : '' }}
+        {{ disabled ? 'disabled' : '' }}
+        {{ multiple ? 'multiple' : '' }}
+>
+    {% for option in options %}
+        <option
+                value="{{ option.value }}"
+                {% if value is iterable %}
+                    {{ option.value in value ? 'selected' : '' }}
+                {% else %}
+                    {{ option.value == value ? 'selected' : '' }}
+                {% endif %}
+                {{ option.disabled ? 'disabled' : '' }}
+        >{{ option.text }}</option>
+    {% endfor %}
+</select>

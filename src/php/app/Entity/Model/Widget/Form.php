@@ -6,7 +6,7 @@ class Form extends \IWA_FormBuilder\Entity\Model\Abstract\Widget
 {
     protected function setup(): void
     {
-        $this->parseAttributeString('version', '1');
+        $this->parseAttributeBoolean('form_html', false);
 
         parent::setup();
     }
@@ -15,6 +15,13 @@ class Form extends \IWA_FormBuilder\Entity\Model\Abstract\Widget
     {
         $html_children = $this->renderChildren();
 
-        return '<form method="post">' . $html_children . '</form>';
+        if ($this->getAttributeBoolean('form_html')) {
+            return \IWA_FormBuilder\App::getTwig()
+                ->render('Widget/Form.twig', [
+                    'children' => $html_children,
+                ]);
+        } else {
+            return $html_children;
+        }
     }
 }

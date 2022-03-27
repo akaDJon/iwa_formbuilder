@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="RefactorSafe" pattern="file[iwa_formbuilder]:src/php//*&amp;&amp;!file[iwa_formbuilder]:src/php/app/Override//*" />
+</component>

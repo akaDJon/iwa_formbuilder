@@ -2,16 +2,16 @@
 
 namespace IWA_FormBuilder\Entity\Model\Abstract;
 
-abstract class Core implements \IWA_FormBuilder\Entity\Service\Interface\XmlDeserializable, \IWA_FormBuilder\Entity\Service\Interface\PhpDeserializable
+abstract class Core implements \IWA_FormBuilder\Entity\Service\Parse\Interface\XmlDeserializable, \IWA_FormBuilder\Entity\Service\Parse\Interface\PhpDeserializable
 {
-    protected string $entityname = '';
-    protected string $id = '';
+    protected string $entityName = '';
+    protected \IWA_FormBuilder\Form\Form $form;
 
-    protected \IWA_FormBuilder\Entity\Service\Interface\ReaderInterface $reader;
+    protected \IWA_FormBuilder\Entity\Service\Parse\Interface\ReaderInterface $reader;
 
-    protected array $attributes = [];
 //    protected array $attributesParsed = [];
 
+    protected array $attributes = [];
     protected array $children = [];
 
     ////////////////////////////////////////////////////////////////////
@@ -23,30 +23,34 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Interface\XmlDese
         if (empty($this->getAttribute('name'))) {
             $this->setAttribute('name', $this->getForm()->generateName());
         }
+    }
 
-        $this->id = $this->getForm()->getPrefix() . '_' . $this->getAttributeString('name');
-//        parent::setup();
+    protected function getHtmlId(): string
+    {
+        return $this->getForm()->getFullHtmlId() . '__' . $this->getAttributeString('name');
     }
 
     ////////////////////////////////////////////////////////////////////
 
-    public function __construct(\IWA_FormBuilder\Entity\Service\Interface\ReaderInterface $reader)
+    public function __construct(\IWA_FormBuilder\Entity\Service\Parse\Interface\ReaderInterface $reader)
     {
         $this->reader = $reader;
+
+        $form = $reader->getForm();
+
+        if (is_null($form)) {
+            throw new \Exception('form is null');
+        }
+
+        $this->form = $form;
     }
 
     public function getForm(): \IWA_FormBuilder\Form\Form
     {
-        $form = $this->getReader()->getForm();
-
-        if (is_null($form)) {
-            throw new \Exception('Form is null');
-        }
-
-        return $form;
+        return $this->form;
     }
 
-    public function getReader(): \IWA_FormBuilder\Entity\Service\Interface\ReaderInterface
+    public function getReader(): \IWA_FormBuilder\Entity\Service\Parse\Interface\ReaderInterface
     {
         return $this->reader;
     }
@@ -60,12 +64,21 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Interface\XmlDese
 
     protected function getAttribute(string $name): mixed
     {
+        if (!isset($this->attributes[$name])) {
+            throw new \Exception('Attribute "' . $name . '" not setup');
+        }
+
         return $this->attributes[$name];
     }
 
-    protected function getAttributeString(string $name): string
+    public function getAttributeString(string $name): string
     {
         return (string)$this->getAttribute($name);
+    }
+
+    public function getAttributeBoolean(string $name): bool
+    {
+        return (bool)$this->getAttribute($name);
     }
 
     protected function setAttribute(string $name, mixed $value): void
@@ -81,6 +94,16 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Interface\XmlDese
     protected function setAttributes(array $data): void
     {
         $this->attributes = $data;
+    }
+
+    public function getEntityName(): string
+    {
+        return $this->entityName;
+    }
+
+    public function getChildren(): array
+    {
+        return $this->children;
     }
 
     protected function markAttributeParsed(string $name): void
@@ -168,10 +191,12 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Interface\XmlDese
     {
         $html = [];
         /**
-         * @var \IWA_FormBuilder\Entity\Model\Abstract\Core $child
+         * @var \IWA_FormBuilder\Entity\Model\Abstract\Core|array $child
          */
         foreach ($this->children as $child) {
-            $html[] = $child->render();
+            if ($child instanceof \IWA_FormBuilder\Entity\Model\Abstract\Core) {
+                $html[] = $child->render();
+            }
         }
 
         return implode($html);
@@ -184,7 +209,7 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Interface\XmlDese
         /** @psalm-suppress UnsafeInstantiation */
         $self = new static($reader);
 
-        $self->entityname = $reader->getEntityName();
+        $self->entityName = $reader->getEntityName();
         $self->attributes = $reader->getEntityAttributes();
         $self->children   = $reader->getEntityChildren();
 
@@ -198,7 +223,7 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Interface\XmlDese
         /** @psalm-suppress UnsafeInstantiation */
         $self = new static($reader);
 
-        $self->entityname = $reader->getEntityName();
+        $self->entityName = $reader->getEntityName();
         $self->attributes = $reader->getEntityAttributes();
         $self->children   = $reader->getEntityChildren();
 
@@ -237,10 +262,10 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Interface\XmlDese
         $this->children = [];
     }
 
-    protected function getCurrentFolder(): string
-    {
-        $helloReflection = new \ReflectionClass($this);
-
-        return $helloReflection->getFilename();
-    }
+//    protected function getCurrentFolder(): string
+//    {
+//        $helloReflection = new \ReflectionClass($this);
+//
+//        return $helloReflection->getFilename();
+//    }
 }

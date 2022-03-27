@@ -4,25 +4,32 @@ namespace IWA_FormBuilder\Entity\Model;
 
 class FieldTextTriple extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 {
-    public function renderInput(): string
+    protected function setup(): void
     {
-//        $this->getForm()->addInput($this->getAttributeString('name'), $this);
+        $this->parseAttributeString('filter', 'subform');
 
-        $forminput = $this->getForm()->getFormInput();
+        parent::setup();
+    }
 
-        $field1 = $forminput->parseAndRender(
+    protected function renderInput(): string
+    {
+        $subform = new \IWA_FormBuilder\Form\Form($this->getForm(), \IWA_FormBuilder\Form\Enum\RenderMode::AS_SUBINPUT);
+        $subform->setPrefix($this->getAttributeString('name'));
+        $subform->setData((array)$this->getValue());
+
+        $field1 = $subform->parseAndRender(
             'object',
             new \IWA_FormBuilder\Entity([
                 'entity' => 'field_text',
-                'name'   => $this->getAttributeString('name') . '_1',
+                'name'   => 'text',
             ])
         );
 
-        $field2 = $forminput->parseAndRender(
+        $field2 = $subform->parseAndRender(
             'object',
             new \IWA_FormBuilder\Entity([
                 'entity' => 'field_textdouble',
-                'name'   => $this->getAttributeString('name') . '_2',
+                'name'   => 'textdouble',
             ])
         );
 

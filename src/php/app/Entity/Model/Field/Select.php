@@ -4,16 +4,23 @@ namespace IWA_FormBuilder\Entity\Model\Field;
 
 class Select extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 {
-    public function renderInput(): string
+    protected function setup(): void
     {
-        $this->getForm()->addInput($this->getAttributeString('name'), $this);
+        $this->parseAttributeString('filter', 'cmd');
+        $this->parseAttributeBoolean('multiple', false);
 
+        parent::setup();
+    }
+
+    protected function renderInput(): string
+    {
         return \IWA_FormBuilder\App::getTwig()
             ->render('Field/Select.twig', [
-                'id'         => $this->id,
-                'field_name' => $this->field_name,
-                'value'      => '',
-                'options'    => $this->getAttribute('options'),
+                'id'            => $this->getHtmlId(),
+                'htmlInputName' => ($this->getAttributeBoolean('multiple') ? $this->getHtmlInputName() . '[]' : $this->getHtmlInputName()),
+                'value'         => $this->getValue(),
+                'options'       => $this->getAttribute('options'),
+                'multiple'      => $this->getAttributeBoolean('multiple'),
             ]);
     }
 

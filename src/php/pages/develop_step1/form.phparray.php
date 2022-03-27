@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'entity'   => 'form',
+    'entity'   => 'forms',
     'version'  => '2',
     'children' => [
         [
-            'entity'   => 'fieldset',
+            'entity'   => 'form',
             'name'     => 'main',
             'children' => [
                 [
@@ -14,7 +14,7 @@ return [
                     'label'  => 'текстовое поле',
                 ],
                 [
-                    'entity'  => 'field_list',
+                    'entity'  => 'field_select',
                     'name'    => 'list',
                     'label'   => 'С описанием',
                     'options' => [

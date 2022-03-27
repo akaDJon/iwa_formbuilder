@@ -12,6 +12,7 @@
 		<directory name="src/php"/>
 		<ignoreFiles>
 			<directory name="vendor"/>
+			<directory name="test"/>
 			<directory name="src/php/app/Override"/>
 			<directory name="src/php/snippets"/>
 		</ignoreFiles>

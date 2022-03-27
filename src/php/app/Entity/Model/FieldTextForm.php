@@ -4,11 +4,18 @@ namespace IWA_FormBuilder\Entity\Model;
 
 class FieldTextForm extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 {
-    public function renderInput(): string
+    protected function setup(): void
     {
-//        $this->getForm()->addInput($this->getAttributeString('name'), $this);
+        $this->parseAttributeString('filter', 'subform');
 
-        $form = $this->getForm();
+        parent::setup();
+    }
+
+    protected function renderInput(): string
+    {
+        $subform = new \IWA_FormBuilder\Form\Form($this->getForm(), \IWA_FormBuilder\Form\Enum\RenderMode::AS_SUBFORM);
+        $subform->setPrefix($this->getAttributeString('name'));
+        $subform->setData((array)$this->getValue());
 
         // example xml form
 //        $source = file_get_contents(ROOTPROJECT . '/src/php/pages/develop_step1/form.xml');
@@ -21,16 +28,16 @@ class FieldTextForm extends \IWA_FormBuilder\Entity\Model\Abstract\Field
                 new \IWA_FormBuilder\Entity([
                     'entity' => 'field_text',
                     'label'  => 'field1',
-                    'name'   => $this->getAttributeString('name') . '_1',
+                    'name'   => 'text1',
                 ]),
                 new \IWA_FormBuilder\Entity([
                     'entity' => 'field_text',
                     'label'  => 'field2',
-                    'name'   => $this->getAttributeString('name') . '_2',
+                    'name'   => 'text2',
                 ]),
             ],
         ]);
 
-        return $form->parseAndRender('object', $source);
+        return $subform->parseAndRender('object', $source);
     }
 }

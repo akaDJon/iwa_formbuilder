@@ -24,23 +24,16 @@ class PhpArray extends PhpObject
         /**
          * @var array<array|string> $array
          */
-
         if (isset($array['entity'])) {
-            $obj = new \IWA_FormBuilder\Entity($array);
-            foreach ($array as $k => $v) {
-                if (is_array($v)) {
-                    $obj->attributes[$k] = static::recursiveArr2Obj($v);
+            if (isset($array['children']) and is_array($array['children']) and !empty($array['children'])) {
+                /** @var array $child */
+                foreach ($array['children'] as $key => $child) {
+                    $array['children'][$key] = static::recursiveArr2Obj($child);
                 }
             }
 
-            return $obj;
+            return new \IWA_FormBuilder\Entity($array);
         } else {
-            foreach ($array as $k => $v) {
-                if (is_array($v)) {
-                    $array[$k] = static::recursiveArr2Obj($v);
-                }
-            }
-
             return $array;
         }
     }

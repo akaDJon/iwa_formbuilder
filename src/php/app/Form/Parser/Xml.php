@@ -18,12 +18,12 @@ class Xml extends \IWA_FormBuilder\Form\Abstract\Parser
         $source = $this->prepareSource($source);
 
         $service             = new \IWA_FormBuilder\Entity\Service\Parse\Xml\Service();
-        $service->elementMap = \IWA_FormBuilder\Entity\Service\Map::get();
+        $service->elementMap = \IWA_FormBuilder\Entity\Service\MapModel::get();
 
         $entitytree = $service->parseSource($this->form, $source);
 
         if (!$entitytree instanceof \IWA_FormBuilder\Entity\Model\Abstract\Core) {
-            throw new \Exception('$entitytree not \IWA_FormBuilder\Entity\Model\Abstract\Core');
+            throw new \Exception('$entitytree is not \IWA_FormBuilder\Entity\Model\Abstract\Core');
         }
 
         return $entitytree;
