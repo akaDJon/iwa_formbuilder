@@ -189,9 +189,7 @@ class FormParseTest extends TestCase
             ],
         ]);
 
-        \IWA_FormBuilder\Entity\Service\MapModel::add([
-            'field_textXXX' => \IWA_FormBuilder\Entity\Model\Field\TextXXX::class,
-        ]);
+        \IWA_FormBuilder\Entity\Service\MapModel::addItem('field_textXXX', \IWA_FormBuilder\Entity\Model\Field\TextXXX::class);
 
         $form = new \IWA_FormBuilder\Form\Form();
         $form->parse('object', $source);
@@ -219,9 +217,7 @@ class FormParseTest extends TestCase
             ],
         ]);
 
-        \IWA_FormBuilder\Entity\Service\MapModel::add([
-            'field_textXXX' => \IWA_FormBuilder\Entity\Model\Field\Text::class,
-        ]);
+        \IWA_FormBuilder\Entity\Service\MapModel::addItem('field_textXXX', \IWA_FormBuilder\Entity\Model\Field\Text::class);
 
         $form = new \IWA_FormBuilder\Form\Form();
         $form->parse('object', $source);
@@ -249,9 +245,7 @@ class FormParseTest extends TestCase
             ],
         ]);
 
-        \IWA_FormBuilder\Entity\Service\MapModel::add([
-            'field_textXXX' => '\IWA_FormBuilder\Entity\Model\Field\Text',
-        ]);
+        \IWA_FormBuilder\Entity\Service\MapModel::addItem('field_textXXX', '\IWA_FormBuilder\Entity\Model\Field\Text');
 
         $form = new \IWA_FormBuilder\Form\Form();
         $form->parse('object', $source);

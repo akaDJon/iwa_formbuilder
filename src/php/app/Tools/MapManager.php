@@ -4,26 +4,67 @@ namespace IWA_FormBuilder\Tools;
 
 class MapManager
 {
-    protected static array $map = [];
+    protected static array $items = [];
 
-    public static function get(): array
+    ///////////////////////////////////////////////////
+
+    public static function getItems(): array
     {
-        return static::$map;
+        return static::$items;
     }
 
-    public static function add(array $array): void
+    public static function addItems(array $array): void
     {
-        static::$map = array_merge(static::$map, $array);
+        static::$items = array_merge(static::$items, $array);
     }
 
-    public static function getClass(string $id): string
+    public static function setItems(array $items): void
     {
-        $map = static::$map;
+        static::$items = $items;
+    }
 
-        if (!isset($map[$id])) {
-            throw new \Exception('unsupported map id');
+    ///////////////////////////////////////////////////
+
+    public static function issetItem(string $id): bool
+    {
+        return (isset(static::$items[$id]));
+    }
+
+    public static function getItem(string $id): string
+    {
+        return (string)static::$items[$id];
+    }
+
+    public static function setItem(string $id, string $class): void
+    {
+        static::$items[$id] = $class;
+    }
+
+    public static function addItem(string $id, string $class): void
+    {
+        static::$items[$id] = $class;
+    }
+
+    public static function removeItem(string $id): void
+    {
+        unset(static::$items[$id]);
+    }
+
+    ///////////////////////////////////////////////////
+
+    protected static function checkClass(string $id): void
+    {
+        if (!static::issetItem($id)) {
+            throw new \Exception('Class "' . static::class . '" id "' . $id . '" not found');
         }
+    }
 
-        return (string)$map[$id];
+    public static function getObject(string $id, array $params = []): object
+    {
+        static::checkClass($id);
+
+        $class = static::getItem($id);
+
+        return new $class(...$params);
     }
 }

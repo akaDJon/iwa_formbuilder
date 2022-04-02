@@ -3,5 +3,9 @@
         name="{{ htmlInputName }}"
         class="form-control"
         type="text"
+        {{ required ? '1required' : '' }}
+        {{ readonly ? 'readonly' : '' }}
+        {{ disabled ? 'disabled' : '' }}
         {% if value is not null %}value="{{ value }}"{% endif %}
+        autocomplete="{{ autocomplete ? 'on' : 'off' }}"
 />

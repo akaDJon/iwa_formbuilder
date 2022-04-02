@@ -16,7 +16,7 @@ Desktop.ini
 /vendor/
 /demo/dev/
 /temp/
-
+.phpunit.result.cache
 
 # .idea #
 /.idea/*

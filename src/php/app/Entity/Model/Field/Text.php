@@ -6,7 +6,9 @@ class Text extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 {
     protected function setup(): void
     {
-        $this->parseAttributeString('filter', 'safe|trim');
+        $this->parsePropertyString('dataType', 'string');
+        $this->parseAttributeString('dataFilter', 'safe|trim');
+        $this->parseAttributeBoolean('autocomplete', false);
 
         parent::setup();
     }
@@ -18,6 +20,10 @@ class Text extends \IWA_FormBuilder\Entity\Model\Abstract\Field
                 'id'            => $this->getHtmlId(),
                 'htmlInputName' => $this->getHtmlInputName(),
                 'value'         => $this->getValue(),
+                'required'      => $this->getAttributeBoolean('required'),
+                'readonly'      => $this->getAttributeBoolean('readonly'),
+                'disabled'      => $this->getAttributeBoolean('disabled'),
+                'autocomplete'  => $this->getAttributeBoolean('autocomplete'),
             ]);
     }
 }

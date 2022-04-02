@@ -1,0 +1,12 @@
+<div
+        {% if id %}id="{{ id }}"{% endif %}
+        {% if class %}class="{{ class }}"{% endif %}
+>
+    {% for item in items %}
+        <div
+                {% if item.class %}class="{{ item.class }}"{% endif %}
+        >
+            {{ item.children|raw }}
+        </div>
+    {% endfor %}
+</div>

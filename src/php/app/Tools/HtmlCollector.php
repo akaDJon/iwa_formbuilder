@@ -33,7 +33,7 @@ class HtmlCollector
         $this->tag = $tags[$type];
     }
 
-    public static function init(string $type, string $values = ''): self
+    protected static function init(string $type, string $values = ''): self
     {
         $self = new self($type);
 
@@ -42,6 +42,21 @@ class HtmlCollector
         }
 
         return $self;
+    }
+
+    public static function initClass(string $values = ''): self
+    {
+        return static::init(HtmlCollector::TYPE_CLASS, $values);
+    }
+
+    public static function initStyle(string $values = ''): self
+    {
+        return static::init(HtmlCollector::TYPE_STYLE, $values);
+    }
+
+    public static function initAttr(string $values = ''): self
+    {
+        return static::init(HtmlCollector::TYPE_ATTR, $values);
     }
 
     public function add(string $value, string $default = ''): static
@@ -82,14 +97,25 @@ class HtmlCollector
 
     public function render(): string
     {
+        $value = $this->value();
+
+        if (empty($value)) {
+            return '';
+        }
+
+        if (empty($this->tag)) {
+            return $value;
+        }
+
+        return $this->tag . '="' . $value . '"';
+    }
+
+    public function value(): string
+    {
         if (empty($this->values)) {
             return '';
         }
 
-        if (!empty($this->tag)) {
-            return $this->tag . '="' . implode($this->glue, $this->values) . '"';
-        } else {
-            return implode($this->glue, $this->values);
-        }
+        return implode($this->glue, $this->values);
     }
 }

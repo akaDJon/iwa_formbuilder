@@ -5,3 +5,11 @@
     margin: 0 auto;
     text-align: center;
 }
+
+.iwa-form-field-label-star {
+    display: none;
+}
+
+.iwa-form-field[data-iwa-field-required] > .iwa-form-field-label > label > .iwa-form-field-label-star {
+    display: inline;
+}

@@ -6,8 +6,18 @@ class Select extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 {
     protected function setup(): void
     {
-        $this->parseAttributeString('filter', 'cmd');
+        $this->parsePropertyString('dataType', 'select');
+        $this->parseAttributeString('dataFilter', 'cmd');
         $this->parseAttributeBoolean('multiple', false);
+
+        $require = 'Требуется выбрать значение из списка';
+
+        if ($this->getAttributeBoolean('multiple')) {
+            $this->parsePropertyString('dataConverterDatabase', 'setarray');
+            $require = 'Требуется выбрать хотя бы одно значение из списка';
+        }
+
+        $this->parseAttributeString('dataValidatorMessages', 'require:' . $require);
 
         parent::setup();
     }
@@ -19,8 +29,11 @@ class Select extends \IWA_FormBuilder\Entity\Model\Abstract\Field
                 'id'            => $this->getHtmlId(),
                 'htmlInputName' => ($this->getAttributeBoolean('multiple') ? $this->getHtmlInputName() . '[]' : $this->getHtmlInputName()),
                 'value'         => $this->getValue(),
-                'options'       => $this->getAttribute('options'),
+                'required'      => $this->getAttributeBoolean('required'),
+                'readonly'      => $this->getAttributeBoolean('readonly'),
+                'disabled'      => $this->getAttributeBoolean('disabled'),
                 'multiple'      => $this->getAttributeBoolean('multiple'),
+                'options'       => $this->getAttributeArray('options'),
             ]);
     }
 

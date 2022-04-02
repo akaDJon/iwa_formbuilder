@@ -2,6 +2,9 @@
 
 namespace IWA_FormBuilder\Form;
 
+/**
+ * @property array<\IWA_FormBuilder\Entity\Model\Abstract\Core> $entitytree
+ */
 class Form
 {
     protected string $prefix = 'iwaform';
@@ -11,9 +14,12 @@ class Form
     protected string $renderMode;
     protected string $needFormName = 'main';
     protected ?\IWA_FormBuilder\Form\Form $parent = null;
+    protected array $entitytree = [];
     protected ?bool $needFormNameFound = null; // null - forms не найден. false - forms найден, но form нет, true - forms найден и form тоже
 
     protected int $last_generate = 0;
+    protected bool $isSubmitted = false;
+    protected array $validateResult = [];
     public int $dump = 0;
 
     public function __construct(?\IWA_FormBuilder\Form\Form $parent = null, string $renderMode = \IWA_FormBuilder\Form\Enum\RenderMode::AS_SUBFORM)
@@ -25,6 +31,11 @@ class Form
     public function setPrefix(string $prefix): void
     {
         $this->prefix = $prefix;
+    }
+
+    public function getPrefix(): string
+    {
+        return $this->prefix;
     }
 
     public function setRepeatablePrefix(string $prefix): void
@@ -69,20 +80,16 @@ class Form
         $this->data = $data;
     }
 
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
     public function generateName(): string
     {
         $this->last_generate++;
 
         return '__genid' . $this->last_generate;
-    }
-
-    public function setDataToField(\IWA_FormBuilder\Entity\Model\Abstract\Field $field): void
-    {
-        $name = $field->getAttributeString('name');
-
-        /** @var mixed $value */
-        $value = $this->data[$name] ?? null;
-        $field->setValue($field->runFilter($value));
     }
 
     public function parseCurrentElement(\IWA_FormBuilder\Entity\Service\Parse\Interface\ReaderInterface $reader): bool
@@ -117,12 +124,10 @@ class Form
 
     protected function getParsedEntity(string $format, mixed $source): \IWA_FormBuilder\Entity\Model\Abstract\Core
     {
-        $class = \IWA_FormBuilder\Form\MapParser::getClass($format);
+        /** @var \IWA_FormBuilder\Form\Abstract\Parser $object */
+        $object = \IWA_FormBuilder\Form\MapParser::getObject($format, [$this]);
 
-        /** @var \IWA_FormBuilder\Form\Abstract\Parser $parser */
-        $parser = new $class($this);
-
-        $entitytree = $parser->run($source);
+        $entitytree = $object->run($source);
 
         // ошибка если не удалось найти запрошенную форму
         if ($this->needFormNameFound === false) {
@@ -136,20 +141,64 @@ class Form
         return $entitytree;
     }
 
+    /** @param \IWA_FormBuilder\Entity\Model\Abstract\Core|array<\IWA_FormBuilder\Entity\Model\Abstract\Core> $entityTree */
+    public function setEntityTree(\IWA_FormBuilder\Entity\Model\Abstract\Core|array $entityTree): void
+    {
+        if (!is_array($entityTree)) {
+            $entityTree = array($entityTree);
+        }
+
+        $this->entitytree = $entityTree;
+    }
+
     public function parse(string $format, mixed $source): void
     {
-        $this->getParsedEntity($format, $source);
+        $this->setEntityTree($this->getParsedEntity($format, $source));
+    }
+
+    public function dataAssignTree(): void
+    {
+//        dumpn($this->prefix, 'prefix');
+//        dumpn($this->repeatablePrefix, 'repeatablePrefix');
+//        dumpn($this->data, '$this->data');
+
+        $this->eachEntity(
+            function (\IWA_FormBuilder\Entity\Model\Abstract\Core $entity) {
+                $entity->dataAssign();
+            }
+        );
+    }
+
+    public function eachEntity(callable $fn): void
+    {
+        /** @var \IWA_FormBuilder\Entity\Model\Abstract\Core $entity */
+        foreach ($this->entitytree as $entity) {
+            $fn($entity);
+        }
+    }
+
+    public function render(): string
+    {
+        $this->dataAssignTree();
+
+        $html = [];
+        $this->eachEntity(
+            function (\IWA_FormBuilder\Entity\Model\Abstract\Core $entity) use (&$html) {
+                $html[] = $entity->render();
+            }
+        );
+
+//        if (in_array($this->dump, [2])) {
+//            dumpn($entitytree, 'after render $entitytree "' . $entitytree->getEntityName() . '" after render');
+//        }
+
+        return implode($html);
     }
 
     public function parseAndRender(string $format, mixed $source): string
     {
-        $entitytree = $this->getParsedEntity($format, $source);
-
-        $render = $entitytree->render();
-
-        if (in_array($this->dump, [2])) {
-            dumpn($entitytree, 'after render $entitytree "' . $entitytree->getEntityName() . '" after render');
-        }
+        $this->parse($format, $source);
+        $render = $this->render();
 
         return $render;
     }
@@ -159,8 +208,59 @@ class Form
         return $this->renderMode;
     }
 
-    public function setRenderMode(string $mode): void
+//    public function setRenderMode(string $mode): void
+//    {
+//        $this->renderMode = $mode;
+//    }
+
+    public function setDataDatabase(array $data): void
     {
-        $this->renderMode = $mode;
+        $result = [];
+        $this->eachEntity(
+            function (\IWA_FormBuilder\Entity\Model\Abstract\Core $entity) use ($data, &$result) {
+                $entity->dataDatabase2Post($data, $result);
+            }
+        );
+
+        dumpn($result, 'setDataDatabase $result');
+
+        $this->data = $result;
+    }
+
+    public function isSubmitted(): bool
+    {
+        return $this->isSubmitted;
+    }
+
+    public function handleRequest(?array $data = null): void
+    {
+        if (is_null($data)) {
+            $data = $_POST[$this->getFullHtmlName()] ?? [];
+        }
+
+        if (isset($data['_iwa_submit_flag']) and $data['_iwa_submit_flag'] = 1) {
+            $this->isSubmitted = true;
+            $this->data        = $data;
+        }
+    }
+
+    public function isValid(): bool
+    {
+        $this->dataAssignTree();
+
+        $result = [];
+        $this->eachEntity(
+            function (\IWA_FormBuilder\Entity\Model\Abstract\Core $entity) use (&$result) {
+                $entity->dataValidate($result);
+            }
+        );
+        $this->validateResult = $result;
+
+        return false;
+    }
+
+    public function getValidateResult(): array
+    {
+        return $this->validateResult;
     }
 }

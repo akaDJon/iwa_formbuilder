@@ -1,1 +1,4 @@
-<form method="post">{{ children|raw }}</form>
+<form method="post">
+    {{ children|raw }}
+    <input type="hidden" name="{{ name }}" value="1"/>
+</form>

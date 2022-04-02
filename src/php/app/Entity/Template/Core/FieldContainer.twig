@@ -1,28 +1,37 @@
 <div
         class="iwa-form-field mb-3"
-        id="{{ id }}__formfield"
+        id="{{ id }}-formfield"
         data-iwa-field-name="{{ name }}"
         data-iwa-field-entityname="{{ entityName }}"
         data-iwa-field-entityclass="{{ entityClass }}"
+        {{ required ? 'data-iwa-field-required' : '' }}
+        {{ readonly ? 'data-iwa-field-readonly' : '' }}
+        {{ disabled ? 'data-iwa-field-disabled' : '' }}
         {{ field_style|raw }}
 >
     <div
             class="iwa-form-field-label"
             {{ label_style|raw }}
     >
-        <label id="{{ id }}__formfieldlabel" for="{{ id }}">
+        <label id="{{ id }}-formfieldlabel" for="{{ id }}">
             <span class="iwa-form-field-label-text">{{ labeltext }}</span>&nbsp;<span class="iwa-form-field-label-star">*</span>
         </label>
     </div>
 
     <div class="iwa-form-field-description">
-        <span class="form-text text-muted">{{ descriptiontext|raw }}</span>
+        <span class="form-text text-muted">{{ description|raw }}</span>
     </div>
 
-    <div class="iwa-form-field-widget">
+    <div class="iwa-form-field-main">
         {{ inputs|raw }}
     </div>
 
-    <div class="iwa-form-field-validate"></div>
+    <div class="iwa-form-field-validate">
+        {% if validate is iterable %}
+            {% for message in validate %}
+                <div class="iwa-form-field-validate-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
 
 </div>

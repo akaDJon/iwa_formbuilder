@@ -2,7 +2,7 @@
         id="{{ id }}"
         name="{{ htmlInputName }}"
         class="form-control"
-        {{ required ? 'required' : '' }}
+        {{ required ? '1required' : '' }}
         {{ readonly ? 'readonly' : '' }}
         {{ disabled ? 'disabled' : '' }}
         {{ multiple ? 'multiple' : '' }}
@@ -11,9 +11,9 @@
         <option
                 value="{{ option.value }}"
                 {% if value is iterable %}
-                    {{ option.value in value ? 'selected' : '' }}
+                    {{ option.value in value ? 'selected="selected"' : '' }}
                 {% else %}
-                    {{ option.value == value ? 'selected' : '' }}
+                    {{ option.value == value ? 'selected="selected"' : '' }}
                 {% endif %}
                 {{ option.disabled ? 'disabled' : '' }}
         >{{ option.text }}</option>

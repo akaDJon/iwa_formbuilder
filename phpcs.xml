@@ -22,6 +22,7 @@
 	
 	<exclude-pattern>/src/php/app/Override/*</exclude-pattern>
 	<exclude-pattern>/src/php/snippets/*</exclude-pattern>
+	<exclude-pattern>/src/php/app/Tools/External/*</exclude-pattern>
 
 	<file>src/php/</file>
 

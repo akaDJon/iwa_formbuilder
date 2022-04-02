@@ -19,6 +19,7 @@ class Form extends \IWA_FormBuilder\Entity\Model\Abstract\Widget
             return \IWA_FormBuilder\App::getTwig()
                 ->render('Widget/Form.twig', [
                     'children' => $html_children,
+                    'name'     => $this->getForm()->getFullHtmlName() . '[_iwa_submit_flag]',
                 ]);
         } else {
             return $html_children;

@@ -7,9 +7,9 @@ http://local/demo/dev/?page=develop_step1
 Вот так выглядит пример интерфейса в [XML](https://github.com/akaDJon/iwa_formbuilder/blob/master/src/php/pages/develop_step1/form.xml) формате:
 ```xml
 <?xml version='1.0' encoding='utf-8'?>
-<form version="2">
+<forms version="2">
 
-	<fieldset name='main'>
+	<form name='main'>
 
 		<field_text
 			name='text'
@@ -25,9 +25,9 @@ http://local/demo/dev/?page=develop_step1
 			<option value='3'>Значение 3</option>
 		</field_select>
 
-	</fieldset>
+	</form>
 
-</form>
+</forms>
 ```
 
 Вот так выглядит пример интерфейса в [PHP-object](https://github.com/akaDJon/iwa_formbuilder/blob/master/src/php/pages/develop_step1/form.phpobject.php) формате:
@@ -35,11 +35,11 @@ http://local/demo/dev/?page=develop_step1
 <?php
 
 return new IWA_FormBuilder\Entity([
-    'entity'   => 'form',
+    'entity'   => 'forms',
     'version'  => '2',
     'children' => [
         new IWA_FormBuilder\Entity([
-            'entity'   => 'fieldset',
+            'entity'   => 'form',
             'name'     => 'main',
             'children' => [
                 new IWA_FormBuilder\Entity([
@@ -68,15 +68,14 @@ return new IWA_FormBuilder\Entity([
 И все этих примеры конвертируются в одно и тоже дерево объектов:
 
 ```php
-^ IWA_FormBuilder\Entity\Model\Widget\Form {#5 ▼
-  #entity: "form"
+^ IWA_FormBuilder\Entity\Model\Widget\Forms {#5 ▼
+  #entity: "forms"
   #attributes: array:2 [▼
     "version" => "2"
-    "name" => "__genid1"
   ]
   #children: array:1 [▼
-    0 => IWA_FormBuilder\Entity\Model\Widget\Fieldset {#6 ▼
-      #entity: "fieldset"
+    0 => IWA_FormBuilder\Entity\Model\Widget\Form {#6 ▼
+      #entity: "form"
       #attributes: array:1 [▼
         "name" => "main"
       ]
@@ -131,9 +130,9 @@ class Map
     public static function get(): array
     {
         return [
-            'form'       => \IWA_FormBuilder\Entity\Model\Widget\Form::class,
-            'fieldset'   => \IWA_FormBuilder\Entity\Model\Widget\Fieldset::class,
-            'field_text' => \IWA_FormBuilder\Entity\Model\Field\Text::class,
+            'forms'        => \IWA_FormBuilder\Entity\Model\Widget\Forms::class,
+            'form'         => \IWA_FormBuilder\Entity\Model\Widget\Form::class,
+            'field_text'   => \IWA_FormBuilder\Entity\Model\Field\Text::class,
             'field_select' => \IWA_FormBuilder\Entity\Model\Field\Select::class,
         ];
     }

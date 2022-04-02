@@ -2,42 +2,57 @@
 
 namespace IWA_FormBuilder\Entity\Model;
 
-class FieldTextForm extends \IWA_FormBuilder\Entity\Model\Abstract\Field
+class FieldTextForm extends \IWA_FormBuilder\Entity\Model\Abstract\Subform
 {
-    protected function setup(): void
-    {
-        $this->parseAttributeString('filter', 'subform');
-
-        parent::setup();
-    }
-
-    protected function renderInput(): string
+    protected function subform(): \IWA_FormBuilder\Form\Form
     {
         $subform = new \IWA_FormBuilder\Form\Form($this->getForm(), \IWA_FormBuilder\Form\Enum\RenderMode::AS_SUBFORM);
         $subform->setPrefix($this->getAttributeString('name'));
-        $subform->setData((array)$this->getValue());
 
-        // example xml form
-//        $source = file_get_contents(ROOTPROJECT . '/src/php/pages/develop_step1/form.xml');
-//        return $form->parseAndRender('xml', $source);
-
-        // example object form
         $source = new \IWA_FormBuilder\Entity([
             'entity'   => 'join',
             'children' => [
                 new \IWA_FormBuilder\Entity([
-                    'entity' => 'field_text',
-                    'label'  => 'field1',
-                    'name'   => 'text1',
+                    'entity'   => 'field_textinteger',
+                    'name'     => 'textform_textinteger',
+                    'label'    => 'subtext1 (textinteger)',
+                    'validate' => 'min:10|max:500',
+                    'required' => 'true',
                 ]),
                 new \IWA_FormBuilder\Entity([
-                    'entity' => 'field_text',
-                    'label'  => 'field2',
-                    'name'   => 'text2',
+                    'entity'   => 'field_text',
+                    'name'     => 'textform_text',
+                    'label'    => 'subtext2 (text)',
+                    'required' => 'true',
+                ]),
+                new \IWA_FormBuilder\Entity([
+                    'entity'   => 'field_select',
+                    'name'     => 'textform_select',
+                    'label'    => 'list (select)',
+                    'required' => 'true',
+                    'options'  => [
+                        ['value' => '1', 'text' => 'Значение 1'],
+                        ['value' => '2', 'text' => 'Значение 2'],
+                        ['value' => '3', 'text' => 'Значение 3'],
+                    ],
+                ]),
+                new \IWA_FormBuilder\Entity([
+                    'entity'   => 'field_select',
+                    'name'     => 'textform_multiple',
+                    'label'    => 'multiple (select)',
+                    'multiple' => 'true',
+                    'required' => 'true',
+                    'options'  => [
+                        ['value' => '1', 'text' => 'Значение 1'],
+                        ['value' => '2', 'text' => 'Значение 2'],
+                        ['value' => '3', 'text' => 'Значение 3'],
+                    ],
                 ]),
             ],
         ]);
 
-        return $subform->parseAndRender('object', $source);
+        $subform->parse('object', $source);
+
+        return $subform;
     }
 }

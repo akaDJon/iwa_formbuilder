@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<forms version="2">
+
+	<form name='main'
+	      form_html='true'
+	>
+
+		<div class='row'>
+			<div class='col'>
+
+				<field_text
+					name='text11'
+					label='Текст 1.1'
+				/>
+
+				<field_text
+					name='text12'
+					label='Текст 1.2'
+				/>
+
+			</div>
+			<div class='col'>
+
+				<field_text
+					name='text21'
+					label='Текст 2.1'
+				/>
+
+				<field_text
+					name='text22'
+					label='Текст 2.2'
+				/>
+
+			</div>
+		</div>
+
+		<field_submit
+			name='submit'
+			button_text='Отправить форму'
+		/>
+
+	</form>
+
+</forms>

@@ -15,6 +15,7 @@
 			<directory name="test"/>
 			<directory name="src/php/app/Override"/>
 			<directory name="src/php/snippets"/>
+			<directory name="src/php/app/Tools/External"/>
 		</ignoreFiles>
 	</projectFiles>
 
@@ -26,6 +27,7 @@
 		<DuplicateClass errorLevel="suppress"/>
 		<MissingFile errorLevel="suppress"/>
 <!--		<UnresolvableInclude errorLevel="suppress"/>-->
+		<UnnecessaryVarAnnotation errorLevel="suppress"/>
 
 		<!--		&lt;!&ndash; PHP 7.4+ Expr\ArrowFunction &ndash;&gt;-->
 		<!--		<UnrecognizedExpression errorLevel="suppress" />-->

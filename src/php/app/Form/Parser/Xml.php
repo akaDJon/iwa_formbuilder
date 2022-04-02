@@ -18,7 +18,7 @@ class Xml extends \IWA_FormBuilder\Form\Abstract\Parser
         $source = $this->prepareSource($source);
 
         $service             = new \IWA_FormBuilder\Entity\Service\Parse\Xml\Service();
-        $service->elementMap = \IWA_FormBuilder\Entity\Service\MapModel::get();
+        $service->elementMap = \IWA_FormBuilder\Entity\Service\MapModel::getItems();
 
         $entitytree = $service->parseSource($this->form, $source);
 

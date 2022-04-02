@@ -1,6 +1,9 @@
 # Этап 2: наследования филдов и филд состоящий из других филдов
 
-http://local/demo/dev/?page=develop_step2
+http://local/demo/dev/?page=develop_step2&subpage=1
+http://local/demo/dev/?page=develop_step2&subpage=2
+http://local/demo/dev/?page=develop_step2&subpage=3
+http://local/demo/dev/?page=develop_step2&subpage=4
 
 ### Заметки
 - Override sabre-xml

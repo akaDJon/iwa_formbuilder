@@ -8,7 +8,7 @@ class RepeatableForm extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 
     protected function setup(): void
     {
-        $this->parseAttributeString('filter', 'subform');
+        $this->parseAttributeString('dataFilter', 'subform');
 
         parent::setup();
     }
@@ -18,12 +18,13 @@ class RepeatableForm extends \IWA_FormBuilder\Entity\Model\Abstract\Field
         $html = [];
         for ($i = 0; $i < 2; $i++) {
             $repeatablePrefix = 'item' . $i + 1;
-            $this->subform?->setRepeatablePrefix($repeatablePrefix);
 
             $data = $this->getValue();
-            $this->subform?->setData($data[$repeatablePrefix]);
 
-            $html[] = $this->renderChildren();
+            $this->subform?->setRepeatablePrefix($repeatablePrefix);
+            $this->subform?->setData($data[$repeatablePrefix] ?? []);
+            $this->subform?->setEntityTree($this->children);
+            $html[] = $this->subform?->render();
         }
 
         return implode($html);

@@ -4,14 +4,14 @@ namespace IWA_FormBuilder\Entity\Model\Abstract;
 
 abstract class Core implements \IWA_FormBuilder\Entity\Service\Parse\Interface\XmlDeserializable, \IWA_FormBuilder\Entity\Service\Parse\Interface\PhpDeserializable
 {
-    protected string $entityName = '';
-    protected \IWA_FormBuilder\Form\Form $form;
+    use CorePropertyTrait;
+    use CoreAttributeTrait;
 
+    protected string $entityName = '';
+
+    protected \IWA_FormBuilder\Form\Form $form;
     protected \IWA_FormBuilder\Entity\Service\Parse\Interface\ReaderInterface $reader;
 
-//    protected array $attributesParsed = [];
-
-    protected array $attributes = [];
     protected array $children = [];
 
     ////////////////////////////////////////////////////////////////////
@@ -19,14 +19,27 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Parse\Interface\X
     protected function setup(): void
     {
         $this->parseAttributeString('name');
+        $this->parseAttributeString('validate', 'none');
 
-        if (empty($this->getAttribute('name'))) {
+        $this->parsePropertyBoolean('idIsReqired', true);
+        $this->parsePropertyBoolean('nameIsGenerated', false);
+        $this->parsePropertyString('dataConverterDatabase', 'none');
+    }
+
+    protected function afterSetup(): void
+    {
+        if (!$this->issetAttribute('name')) {
+            $this->setProperty('nameIsGenerated', true);
             $this->setAttribute('name', $this->getForm()->generateName());
         }
     }
 
     protected function getHtmlId(): string
     {
+        if (($this->getPropertyBoolean('idIsReqired') === false) and ($this->getPropertyBoolean('nameIsGenerated') === true)) {
+            return '';
+        }
+
         return $this->getForm()->getFullHtmlId() . '__' . $this->getAttributeString('name');
     }
 
@@ -57,147 +70,56 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Parse\Interface\X
 
     ////////////////////////////////////////////////////////////////////
 
-    protected function issetAttribute(string $name): bool
-    {
-        return isset($this->attributes[$name]);
-    }
-
-    protected function getAttribute(string $name): mixed
-    {
-        if (!isset($this->attributes[$name])) {
-            throw new \Exception('Attribute "' . $name . '" not setup');
-        }
-
-        return $this->attributes[$name];
-    }
-
-    public function getAttributeString(string $name): string
-    {
-        return (string)$this->getAttribute($name);
-    }
-
-    public function getAttributeBoolean(string $name): bool
-    {
-        return (bool)$this->getAttribute($name);
-    }
-
-    protected function setAttribute(string $name, mixed $value): void
-    {
-        $this->attributes[$name] = $value;
-    }
-
-    protected function getAttributes(): mixed
-    {
-        return $this->attributes;
-    }
-
-    protected function setAttributes(array $data): void
-    {
-        $this->attributes = $data;
-    }
-
     public function getEntityName(): string
     {
         return $this->entityName;
     }
 
-    public function getChildren(): array
+//    public function getChildren(): array
+//    {
+//        return $this->children;
+//    }
+
+    public function eachChildrenEntity(callable $fn): void
     {
-        return $this->children;
+        $this->eachEntityRecursive($this->children, $fn);
+        $this->eachEntityRecursive($this->attributes, $fn);
     }
 
-    protected function markAttributeParsed(string $name): void
+    protected function eachEntityRecursive(array $arr, callable $fn): void
     {
-//        $this->attributesParsed[$name] = true;
-    }
-
-    protected function parseAttributeInteger(string $name, int $default = 0): bool
-    {
-        $this->markAttributeParsed($name);
-
-        if (!$this->issetAttribute($name) or $this->getAttribute($name) === '0' or $this->getAttribute($name) === 0) {
-            $this->setAttribute($name, $default);
-
-            return false;
+        /**
+         * @var \IWA_FormBuilder\Entity\Model\Abstract\Core|array|string $child
+         */
+        foreach ($arr as $child) {
+            if ($child instanceof \IWA_FormBuilder\Entity\Model\Abstract\Core) {
+                $fn($child);
+            } else {
+                if (is_array($child)) {
+                    $this->eachEntityRecursive($child, $fn);
+                }
+            }
         }
-
-        $this->setAttribute($name, (int)$this->getAttribute($name));
-
-        return true;
-    }
-
-    protected function parseAttributeBoolean(string $name, null|bool $default = null): bool
-    {
-        $this->markAttributeParsed($name);
-
-        if (!$this->issetAttribute($name)) {
-            $this->setAttribute($name, $default);
-
-            return false;
-        }
-
-        if ($default === null) {
-            return false;
-        }
-
-        if ($default === false) {
-            $this->setAttribute($name, ($this->getAttribute($name) === true or $this->getAttribute($name) === 'true'));
-        }
-
-        if ($default === true) {
-            $this->setAttribute($name, !($this->getAttribute($name) === false or $this->getAttribute($name) === 'false'));
-        }
-
-        $this->setAttribute($name, (bool)$this->getAttribute($name));
-
-        return true;
-    }
-
-    protected function parseAttributeString(string $name, string $default = '', bool $lang_parse = false): bool
-    {
-        $this->markAttributeParsed($name);
-
-        if (!$this->issetAttribute($name) or $this->getAttribute($name) === '') {
-            $this->setAttribute($name, $default);
-
-            return false;
-        }
-
-        if ($lang_parse) {
-            // TODO
-        }
-
-        $this->setAttribute($name, $this->getAttributeString($name));
-
-        return true;
-    }
-
-    protected function parseAttributeStringEnhanced(string $name, string $default = '', bool $lang_parse = false, string $prefix = '', string $postfix = ''): bool
-    {
-        $result = $this->parseAttributeString($name, $default, $lang_parse);
-
-        if ($result) {
-            $this->setAttribute($name, $prefix . ($this->getAttributeString($name)) . $postfix);
-        }
-
-        return $result;
     }
 
     ////////////////////////////////////////////////////////////////////
 
     abstract public function render(): string;
 
-    protected function renderChildren(): string
+    protected function renderChildren(array $arr = null): string
     {
+        if (!isset($arr)) {
+            $arr = $this->children;
+        }
+
         $html = [];
-        /**
-         * @var \IWA_FormBuilder\Entity\Model\Abstract\Core|array $child
-         */
-        foreach ($this->children as $child) {
-            if ($child instanceof \IWA_FormBuilder\Entity\Model\Abstract\Core) {
+
+        $this->eachEntityRecursive(
+            $arr,
+            function (\IWA_FormBuilder\Entity\Model\Abstract\Core $child) use (&$html) {
                 $html[] = $child->render();
             }
-        }
+        );
 
         return implode($html);
     }
@@ -214,6 +136,7 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Parse\Interface\X
         $self->children   = $reader->getEntityChildren();
 
         $self->setup();
+        $self->afterSetup();
 
         return $self;
     }
@@ -228,6 +151,7 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Parse\Interface\X
         $self->children   = $reader->getEntityChildren();
 
         $self->setup();
+        $self->afterSetup();
 
         return $self;
     }
@@ -262,10 +186,32 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Parse\Interface\X
         $this->children = [];
     }
 
-//    protected function getCurrentFolder(): string
-//    {
-//        $helloReflection = new \ReflectionClass($this);
-//
-//        return $helloReflection->getFilename();
-//    }
+    ////////////////////////////////////////////////////////////////////
+
+    public function dataAssign(): void
+    {
+        $this->eachChildrenEntity(
+            function (\IWA_FormBuilder\Entity\Model\Abstract\Core $child) {
+                $child->dataAssign();
+            }
+        );
+    }
+
+    public function dataDatabase2Post(array $data, array &$result): void
+    {
+        $this->eachChildrenEntity(
+            function (\IWA_FormBuilder\Entity\Model\Abstract\Core $child) use ($data, &$result) {
+                $child->dataDatabase2Post($data, $result);
+            }
+        );
+    }
+
+    public function dataValidate(array &$result): void
+    {
+        $this->eachChildrenEntity(
+            function (\IWA_FormBuilder\Entity\Model\Abstract\Core $child) use (&$result) {
+                $child->dataValidate($result);
+            }
+        );
+    }
 }
