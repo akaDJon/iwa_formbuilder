@@ -6,7 +6,7 @@ class Submit extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 {
     protected function setup(): void
     {
-        $this->parsePropertyString('dataType', 'string');
+        $this->parsePropertyString('data_type', 'string');
         $this->parseAttributeString('button_value', 'true');
         $this->parseAttributeString('button_text', $this->getAttributeString('name'));
 

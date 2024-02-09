@@ -5,3 +5,5 @@ if (!defined('ROOTPROJECT')) {
 }
 
 require_once(ROOTPROJECT . '/vendor/autoload.php');
+
+\IWA_FormBuilder\Entity\Service\TranslatorManager::init('ru_RU');

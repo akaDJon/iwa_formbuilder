@@ -21,7 +21,7 @@
 
 		<field_select
 			name='list'
-			label='Список'
+			label='label.list'
 			required='true'
 		>
 			<option value='1'>Значение 1</option>
@@ -34,6 +34,7 @@
 			label='Множественный выбор'
 			multiple='true'
 			required='true'
+			validate_messages='require:test'
 		>
 			<option value='1'>Значение 1</option>
 			<option value='2'>Значение 2</option>

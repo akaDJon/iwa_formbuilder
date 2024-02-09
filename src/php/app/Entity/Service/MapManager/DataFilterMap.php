@@ -1,8 +1,8 @@
 <?php
 
-namespace IWA_FormBuilder\Entity\Service;
+namespace IWA_FormBuilder\Entity\Service\MapManager;
 
-class MapDataFilter extends \IWA_FormBuilder\Tools\MapManager
+class DataFilterMap extends \IWA_FormBuilder\Tools\MapManager
 {
     protected static array $items = [
         'subform'  => \IWA_FormBuilder\Entity\Service\DataFilter\SubformFilter::class,

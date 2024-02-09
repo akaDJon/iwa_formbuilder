@@ -5,7 +5,9 @@ http://local/demo/dev/?page=develop_step3
 - Написаны тесты нормального парсинга формы и тесты исключений которые могут происходить
 - Написаны тесты для InheritAttributeManager
 - Реализация вложенных subform и установки в филд значений из POST
+- subform может быть встроенной в основную форму или отдельной со своим префиксом
 - Фильтрация значений из POST. удаление HTML, trim и другие
+- вилидация данных: require, min, max
 - trait для управления атрибутами и проперти
 - класс FriendlyStringParser для парсинга строк validate "min:1|max:100" и строк filter "safe|trim"
 - классы DataConverterDatabase, DataFilter, DataType, DataValidator
@@ -16,10 +18,4 @@ http://local/demo/dev/?page=develop_step3
     + Как набор инпутов внутри одного филда
     * В одном филде два инпута. В пост отправляются два инпута. В базу отправляются два инпута. В dt это две колонки
     * В одном филде два инпута. В пост отправляются два инпута. В базу отправляются два инпута. В dt это одна колонка
-    * В одном филде два инпута. В пост отправляются два инпута. В базу отправляются один инпут. В dt это одна колонка
-    - В одном филде два инпута. В пост отправляются три инпута. В базу отправляются один инпут. В dt это одна колонка
     - В базу может уйти целиком или отдельными филдами
-    - https://symfony.com/doc/current/forms.html
-    - https://symfony.com/doc/current/form/form_customization.html
-- subform указанный в entity
-- subform multiple, min, max, buttons(add, remove, move)

@@ -24,7 +24,12 @@ class MinValidator implements \IWA_FormBuilder\Entity\Service\DataValidator\Inte
         $min      = (float)$options[0];
 
         if (!($numvalue >= $min)) {
-            return sprintf('Значение должно быть больше или равно %s', $min);
+            $validate_messages = $entity->getAttributeString('validate_messages', '');
+            $rules             = \IWA_FormBuilder\Tools\FriendlyStringParser::parse($validate_messages);
+            $message           = (string)($rules['min']['params'][0] ?? 'validate.min.default');
+            $parameters        = ['%min%' => $min];
+
+            return \IWA_FormBuilder\Entity\Service\TranslatorManager::trans($message, $parameters);
         }
 
         return true;

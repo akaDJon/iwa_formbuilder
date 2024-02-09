@@ -6,18 +6,17 @@ class Select extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 {
     protected function setup(): void
     {
-        $this->parsePropertyString('dataType', 'select');
-        $this->parseAttributeString('dataFilter', 'cmd');
+        $this->parsePropertyString('data_type', 'select');
+        $this->parseAttributeString('data_filter', 'cmd');
         $this->parseAttributeBoolean('multiple', false);
 
-        $require = 'Требуется выбрать значение из списка';
-
+        $require = 'validate.require.select_default';
         if ($this->getAttributeBoolean('multiple')) {
-            $this->parsePropertyString('dataConverterDatabase', 'setarray');
-            $require = 'Требуется выбрать хотя бы одно значение из списка';
+            $this->parsePropertyString('data_converter_database', 'setarray');
+            $require = 'validate.require.select_multiple';
         }
 
-        $this->parseAttributeString('dataValidatorMessages', 'require:' . $require);
+        $this->parseAttributeString('validate_messages', 'require:' . $require);
 
         parent::setup();
     }

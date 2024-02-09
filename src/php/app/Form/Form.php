@@ -12,6 +12,7 @@ class Form
     protected array $data = [];
     protected array $control_name = [];
     protected string $renderMode;
+    protected string $subformMode;
     protected string $needFormName = 'main';
     protected ?\IWA_FormBuilder\Form\Form $parent = null;
     protected array $entitytree = [];
@@ -22,10 +23,12 @@ class Form
     protected array $validateResult = [];
     public int $dump = 0;
 
-    public function __construct(?\IWA_FormBuilder\Form\Form $parent = null, string $renderMode = \IWA_FormBuilder\Form\Enum\RenderMode::AS_SUBFORM)
+    /** @param array{parent?: \IWA_FormBuilder\Form\Form, renderMode?: string, subformMode? : string} $options */
+    public function __construct(array $options = [])
     {
-        $this->parent     = $parent;
-        $this->renderMode = $renderMode;
+        $this->parent      = $options['parent'] ?? null;
+        $this->renderMode  = $options['renderMode'] ?? \IWA_FormBuilder\Form\Enum\RenderMode::AS_SUBFORM;
+        $this->subformMode = $options['subformMode'] ?? \IWA_FormBuilder\Form\Enum\SubformMode::INDEPENDENT;
     }
 
     public function setPrefix(string $prefix): void
@@ -48,6 +51,10 @@ class Form
         $repeatablePrefix = (!empty($this->repeatablePrefix) ? '__' . $this->repeatablePrefix : '');
 
         if (!is_null($this->parent)) {
+            if ($this->subformMode == \IWA_FormBuilder\Form\Enum\SubformMode::EMBEDDED) {
+                return $this->parent->getFullHtmlId() . $repeatablePrefix;
+            }
+
             return $this->parent->getFullHtmlId() . '__' . $this->prefix . $repeatablePrefix;
         }
 
@@ -59,6 +66,10 @@ class Form
         $repeatablePrefix = (!empty($this->repeatablePrefix) ? '[' . $this->repeatablePrefix . ']' : '');
 
         if (!is_null($this->parent)) {
+            if ($this->subformMode == \IWA_FormBuilder\Form\Enum\SubformMode::EMBEDDED) {
+                return $this->parent->getFullHtmlName() . $repeatablePrefix;
+            }
+
             return $this->parent->getFullHtmlName() . '[' . $this->prefix . ']' . $repeatablePrefix;
         }
 
@@ -222,9 +233,21 @@ class Form
             }
         );
 
-        dumpn($result, 'setDataDatabase $result');
+//        dumpn($result, 'setDataDatabase $result');
 
         $this->data = $result;
+    }
+
+    public function getDataDatabase(): array
+    {
+        $result = [];
+        $this->eachEntity(
+            function (\IWA_FormBuilder\Entity\Model\Abstract\Core $entity) use (&$result) {
+                $entity->dataPost2Database($result);
+            }
+        );
+
+        return $result;
     }
 
     public function isSubmitted(): bool
@@ -256,7 +279,9 @@ class Form
         );
         $this->validateResult = $result;
 
-        return false;
+        dump($this->validateResult);
+
+        return (empty($this->validateResult));
     }
 
     public function getValidateResult(): array

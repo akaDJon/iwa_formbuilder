@@ -24,7 +24,12 @@ class MaxValidator implements \IWA_FormBuilder\Entity\Service\DataValidator\Inte
         $max      = (float)$options[0];
 
         if (!($numvalue <= $max)) {
-            return sprintf('Значение должно быть меньше или равно %s', $max);
+            $validate_messages = $entity->getAttributeString('validate_messages', '');
+            $rules                 = \IWA_FormBuilder\Tools\FriendlyStringParser::parse($validate_messages);
+            $message               = (string)($rules['max']['params'][0] ?? 'validate.max.default');
+            $parameters = ['%max%' => $max];
+
+            return \IWA_FormBuilder\Entity\Service\TranslatorManager::trans($message, $parameters);
         }
 
         return true;

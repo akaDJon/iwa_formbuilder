@@ -1,8 +1,8 @@
 <?php
 
-namespace IWA_FormBuilder\Entity\Service;
+namespace IWA_FormBuilder\Entity\Service\MapManager;
 
-class MapDataValidator extends \IWA_FormBuilder\Tools\MapManager
+class DataValidatorMap extends \IWA_FormBuilder\Tools\MapManager
 {
     protected static array $items = [
         'none'    => \IWA_FormBuilder\Entity\Service\DataValidator\NoneValidator::class,

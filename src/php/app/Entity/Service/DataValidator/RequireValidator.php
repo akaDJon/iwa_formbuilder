@@ -8,17 +8,16 @@ class RequireValidator implements \IWA_FormBuilder\Entity\Service\DataValidator\
     {
         $dataType = $entity->getDataType();
 
-        $dataValidatorMessages = $entity->getAttributeString('dataValidatorMessages', '');
-        $rules                 = \IWA_FormBuilder\Tools\FriendlyStringParser::parse($dataValidatorMessages);
-        $message               = $rules['require']['params'][0] ?? 'Значение не должно быть пустым';
-
         if (!isset($dataType)) {
             throw new \Exception(sprintf('dataType is not set in class "%s"', $entity::class));
         }
 
         if ($dataType::isEmpty($entity, $postvalue)) {
-//            return 'Значение не должно быть пустым';
-            return $message;
+            $validate_messages = $entity->getAttributeString('validate_messages', '');
+            $rules                 = \IWA_FormBuilder\Tools\FriendlyStringParser::parse($validate_messages);
+            $message               = (string)($rules['require']['params'][0] ?? 'validate.require.default');
+
+            return \IWA_FormBuilder\Entity\Service\TranslatorManager::trans($message);
         }
 
         return true;

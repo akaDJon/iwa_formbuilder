@@ -1,13 +1,14 @@
 <?php
 
-namespace IWA_FormBuilder\Entity\Model;
+namespace IWA_FormBuilder\Entity\Model\Subform;
 
 class FieldTextForm extends \IWA_FormBuilder\Entity\Model\Abstract\Subform
 {
-    protected function subform(): \IWA_FormBuilder\Form\Form
+    protected function subformParse(): void
     {
-        $subform = new \IWA_FormBuilder\Form\Form($this->getForm(), \IWA_FormBuilder\Form\Enum\RenderMode::AS_SUBFORM);
-        $subform->setPrefix($this->getAttributeString('name'));
+        if (is_null($this->subform)) {
+            throw new \Exception('subform is null');
+        }
 
         $source = new \IWA_FormBuilder\Entity([
             'entity'   => 'join',
@@ -51,8 +52,6 @@ class FieldTextForm extends \IWA_FormBuilder\Entity\Model\Abstract\Subform
             ],
         ]);
 
-        $subform->parse('object', $source);
-
-        return $subform;
+        $this->subform->parse('object', $source);
     }
 }

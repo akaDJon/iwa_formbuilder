@@ -10,7 +10,7 @@ class Columns extends \IWA_FormBuilder\Entity\Model\Abstract\Widget
     {
         $this->parseAttributeString('class', '');
 
-        $this->parsePropertyBoolean('idIsReqired', false);
+        $this->parsePropertyBoolean('id_is_reqired', false);
 
         parent::setup();
     }

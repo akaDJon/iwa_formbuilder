@@ -17,7 +17,7 @@ abstract class Field extends Core
 
     protected function setup(): void
     {
-        $this->parseAttributeString('dataFilter', 'safe');
+        $this->parseAttributeString('data_filter', 'safe');
         $this->parseAttributeString('label', '', true);
         $this->parseAttributeString('description', '', true);
         $this->parseAttributeBoolean('field_hidden', false);
@@ -34,10 +34,10 @@ abstract class Field extends Core
             $this->setAttribute('label', $this->getAttributeString('name'));
         }
 
-        if ($this->issetProperty('dataType')) {
-            $dataType = $this->getPropertyString('dataType');
+        if ($this->issetProperty('data_type')) {
+            $dataType = $this->getPropertyString('data_type');
             /** @var \IWA_FormBuilder\Entity\Service\DataType\Abstract\CoreType $object */
-            $object = \IWA_FormBuilder\Entity\Service\MapDataType::getObject($dataType);
+            $object = \IWA_FormBuilder\Entity\Service\MapManager\DataTypeMap::getObject($dataType);
 
             $this->dataType = $object;
         }
@@ -119,12 +119,12 @@ abstract class Field extends Core
 
     public function runFilter(mixed $value): mixed
     {
-        $filter = $this->getAttributeString('dataFilter');
+        $filter = $this->getAttributeString('data_filter');
         $rules  = \IWA_FormBuilder\Tools\FriendlyStringParser::parse($filter);
 
         foreach ($rules as $rule) {
             /** @var \IWA_FormBuilder\Entity\Service\DataFilter\Interface\FilterInterface $object */
-            $object = \IWA_FormBuilder\Entity\Service\MapDataFilter::getObject($rule['name']);
+            $object = \IWA_FormBuilder\Entity\Service\MapManager\DataFilterMap::getObject($rule['name']);
 
             if (is_array($value) and !empty($value)) {
                 /** @var mixed $val */
@@ -175,15 +175,28 @@ abstract class Field extends Core
     {
         $name = $this->getAttributeString('name');
 
-        $mapname = $this->getPropertyString('dataConverterDatabase');
+        $mapname = $this->getPropertyString('data_converter_database');
         /** @var \IWA_FormBuilder\Entity\Service\DataConverterDatabase\Interface\DataConverterDatabaseInterface $object */
-        $object = \IWA_FormBuilder\Entity\Service\MapDataConverterDatabase::getObject($mapname);
+        $object = \IWA_FormBuilder\Entity\Service\MapManager\DataConverterDatabaseMap::getObject($mapname);
 
         if (isset($data[$name])) {
             $result[$name] = $object::convertDatabase2Post($this, $data[$name]);
         }
 
         parent::dataDatabase2Post($data, $result);
+    }
+
+    public function dataPost2Database(array &$result): void
+    {
+        $name = $this->getAttributeString('name');
+
+        $mapname = $this->getPropertyString('data_converter_database');
+        /** @var \IWA_FormBuilder\Entity\Service\DataConverterDatabase\Interface\DataConverterDatabaseInterface $object */
+        $object = \IWA_FormBuilder\Entity\Service\MapManager\DataConverterDatabaseMap::getObject($mapname);
+
+        $result[$name] = $object::convertPost2Database($this, $this->getValue());
+
+        parent::dataPost2Database($result);
     }
 
     public function setValidateResult(array $array): void
@@ -205,7 +218,7 @@ abstract class Field extends Core
 
         foreach ($rules as $rule) {
             /** @var \IWA_FormBuilder\Entity\Service\DataValidator\Interface\DataValidatorInterface $object */
-            $object = \IWA_FormBuilder\Entity\Service\MapDataValidator::getObject($rule['name']);
+            $object = \IWA_FormBuilder\Entity\Service\MapManager\DataValidatorMap::getObject($rule['name']);
 
             $valid = $object::check($this, $this->getValue(), $rule['params']);
             if ($valid !== true) {

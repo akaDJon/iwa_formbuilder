@@ -21,22 +21,22 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Parse\Interface\X
         $this->parseAttributeString('name');
         $this->parseAttributeString('validate', 'none');
 
-        $this->parsePropertyBoolean('idIsReqired', true);
-        $this->parsePropertyBoolean('nameIsGenerated', false);
-        $this->parsePropertyString('dataConverterDatabase', 'none');
+        $this->parsePropertyBoolean('id_is_reqired', true);
+        $this->parsePropertyBoolean('name_is_generated', false);
+        $this->parsePropertyString('data_converter_database', 'none');
     }
 
     protected function afterSetup(): void
     {
         if (!$this->issetAttribute('name')) {
-            $this->setProperty('nameIsGenerated', true);
+            $this->setProperty('name_is_generated', true);
             $this->setAttribute('name', $this->getForm()->generateName());
         }
     }
 
     protected function getHtmlId(): string
     {
-        if (($this->getPropertyBoolean('idIsReqired') === false) and ($this->getPropertyBoolean('nameIsGenerated') === true)) {
+        if (($this->getPropertyBoolean('id_is_reqired') === false) and ($this->getPropertyBoolean('name_is_generated') === true)) {
             return '';
         }
 
@@ -202,6 +202,15 @@ abstract class Core implements \IWA_FormBuilder\Entity\Service\Parse\Interface\X
         $this->eachChildrenEntity(
             function (\IWA_FormBuilder\Entity\Model\Abstract\Core $child) use ($data, &$result) {
                 $child->dataDatabase2Post($data, $result);
+            }
+        );
+    }
+
+    public function dataPost2Database(array &$result): void
+    {
+        $this->eachChildrenEntity(
+            function (\IWA_FormBuilder\Entity\Model\Abstract\Core $child) use (&$result) {
+                $child->dataPost2Database($result);
             }
         );
     }

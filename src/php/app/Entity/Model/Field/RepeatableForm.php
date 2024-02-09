@@ -1,6 +1,6 @@
 <?php
 
-namespace IWA_FormBuilder\Entity\Model\Widget;
+namespace IWA_FormBuilder\Entity\Model\Field;
 
 class RepeatableForm extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 {
@@ -8,7 +8,7 @@ class RepeatableForm extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 
     protected function setup(): void
     {
-        $this->parseAttributeString('dataFilter', 'subform');
+        $this->parseAttributeString('data_filter', 'subform');
 
         parent::setup();
     }
@@ -37,11 +37,18 @@ class RepeatableForm extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 
         $form_old = $reader->getForm();
 
+        if (is_null($form_old)) {
+            throw new \Exception('form is null');
+        }
+
         $self->entityName = $reader->getEntityName();
         $self->attributes = $reader->getEntityAttributes();
 
 
-        $subform = new \IWA_FormBuilder\Form\Form($form_old, \IWA_FormBuilder\Form\Enum\RenderMode::AS_SUBFORM);
+        $options               = array();
+        $options['parent']     = $form_old;
+
+        $subform = new \IWA_FormBuilder\Form\Form($options);
         $subform->setPrefix($self->getAttributeString('name'));
 
         $self->subform = $subform;

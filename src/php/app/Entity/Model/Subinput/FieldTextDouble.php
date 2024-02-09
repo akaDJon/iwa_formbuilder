@@ -1,13 +1,14 @@
 <?php
 
-namespace IWA_FormBuilder\Entity\Model;
+namespace IWA_FormBuilder\Entity\Model\Subinput;
 
-class FieldTextTriple extends \IWA_FormBuilder\Entity\Model\Abstract\Subform
+class FieldTextDouble extends \IWA_FormBuilder\Entity\Model\Abstract\Subinput
 {
-    protected function subform(): \IWA_FormBuilder\Form\Form
+    protected function subformParse(): void
     {
-        $subform = new \IWA_FormBuilder\Form\Form($this->getForm(), \IWA_FormBuilder\Form\Enum\RenderMode::AS_SUBINPUT);
-        $subform->setPrefix($this->getAttributeString('name'));
+        if (is_null($this->subform)) {
+            throw new \Exception('subform is null');
+        }
 
         $source = new \IWA_FormBuilder\Entity([
             'entity'   => 'join',
@@ -19,7 +20,7 @@ class FieldTextTriple extends \IWA_FormBuilder\Entity\Model\Abstract\Subform
                     'validate' => 'min:10|max:500',
                 ]),
                 new \IWA_FormBuilder\Entity([
-                    'entity'   => 'field_textdouble',
+                    'entity'   => 'field_text',
                     'name'     => 'subtext2',
                     'label'    => 'field2',
                     'validate' => 'min:500',
@@ -27,10 +28,6 @@ class FieldTextTriple extends \IWA_FormBuilder\Entity\Model\Abstract\Subform
             ],
         ]);
 
-        $subform->parse('object', $source);
-
-        $this->subform = $subform;
-
-        return $this->subform;
+        $this->subform->parse('object', $source);
     }
 }

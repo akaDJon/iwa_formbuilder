@@ -1,8 +1,8 @@
 <?php
 
-namespace IWA_FormBuilder\Entity\Service;
+namespace IWA_FormBuilder\Entity\Service\MapManager;
 
-class MapDataType extends \IWA_FormBuilder\Tools\MapManager
+class DataTypeMap extends \IWA_FormBuilder\Tools\MapManager
 {
     protected static array $items = [
         'string' => \IWA_FormBuilder\Entity\Service\DataType\StringType::class,

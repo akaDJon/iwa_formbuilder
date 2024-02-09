@@ -6,7 +6,7 @@ class Div extends \IWA_FormBuilder\Entity\Model\Abstract\Widget
 {
     protected function setup(): void
     {
-        $this->setProperty('idIsReqired', false);
+        $this->setProperty('id_is_reqired', false);
         $this->parseAttributeString('class');
 
         parent::setup();

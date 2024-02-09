@@ -121,7 +121,9 @@ class Main
 
         if (static::issetAttribute($attributes, $name)) {
             if ($lang_parse) {
-                // TODO
+                $message = static::getAttributeString($attributes, $name, '');
+                $trans = \IWA_FormBuilder\Entity\Service\TranslatorManager::trans($message);
+                static::setAttribute($attributes, $name, $trans);
             }
         }
     }

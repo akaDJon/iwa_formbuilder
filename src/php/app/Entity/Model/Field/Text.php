@@ -6,8 +6,8 @@ class Text extends \IWA_FormBuilder\Entity\Model\Abstract\Field
 {
     protected function setup(): void
     {
-        $this->parsePropertyString('dataType', 'string');
-        $this->parseAttributeString('dataFilter', 'safe|trim');
+        $this->parsePropertyString('data_type', 'string');
+        $this->parseAttributeString('data_filter', 'safe|trim');
         $this->parseAttributeBoolean('autocomplete', false);
 
         parent::setup();
